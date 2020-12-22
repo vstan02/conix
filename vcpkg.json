@@ -1,0 +1,5 @@
+{
+  "name": "conix",
+  "version-string": "0.0.0-dev",
+  "description": "Command line interface building library"
+}
