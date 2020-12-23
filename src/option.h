@@ -17,11 +17,18 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_MODULE_H
-#define CONIX_MODULE_H
+#ifndef CONIX_OPTION_H
+#define CONIX_OPTION_H
 
-#define PRIVATE_DATA struct t_Private
-#define PRIVATE_INIT(private) private = (PRIVATE_DATA*) malloc(sizeof(PRIVATE_DATA))
-#define PRIVATE_RESET(private) free((PRIVATE_DATA*)(self->conix_private))
+typedef struct t_Option Option;
+struct t_Option {
+    void* private;
+};
 
-#endif // CONIX_MODULE_H
+void option_init(Option* self);
+Option* option_create(void);
+
+void option_reset(Option* self);
+void option_destroy(Option* self);
+
+#endif // CONIX_OPTION_H

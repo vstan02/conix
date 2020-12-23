@@ -5,8 +5,9 @@ set(CMAKE_C_STANDARD 11)
 
 set(
     CONIX_SOURCES
-    src/module.h
     src/conix.c
+    src/option.c
+    src/list.c
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)

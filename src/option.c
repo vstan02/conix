@@ -17,20 +17,30 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_CONIX_H
-#define CONIX_CONIX_H
+#include <malloc.h>
 
-typedef struct t_Conix Conix;
-struct t_Conix {
-    void* private;
-};
+#include "option.h"
+#include "private.h"
 
-void conix_run(Conix* self);
+PRIVATE_DATA {};
 
-void conix_init(Conix* self, int argc, const char** argv);
-Conix* conix_create(int argc, const char** argv);
+void option_init(Option* self) {
+    PRIVATE_INIT(self);
+}
 
-void conix_reset(Conix* self);
-void conix_destroy(Conix* self);
+Option* option_create(void) {
+    Option* self = (Option*) malloc(sizeof(Option));
+    option_init(self);
+    return self;
+}
 
-#endif // CONIX_CONIX_H
+void option_reset(Option* self) {
+    PRIVATE_RESET(self);
+}
+
+void option_destroy(Option* self) {
+    if (self) {
+        option_reset(self);
+        free(self);
+    }
+}

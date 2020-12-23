@@ -17,30 +17,41 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <stdio.h>
 #include <malloc.h>
 
 #include "conix.h"
-#include "module.h"
-
-#define PRIVATE(object) ((PRIVATE_DATA*) (object->conix_private))
+#include "private.h"
 
 PRIVATE_DATA {
-    const char* title;
+    int argc;
+    const char** argv;
 };
 
-void conix_init(Conix* self, const char* title) {
-    PRIVATE_INIT(self->conix_private);
-    PRIVATE(self)->title = title;
+static void conix_print_args(Conix* self) {
+    printf("%i\n", PRIVATE(self)->argc);
+    for (size_t index = 0; index < PRIVATE(self)->argc; ++index)
+        printf("%s\n", PRIVATE(self)->argv[index]);
 }
 
-Conix* conix_create(const char* title) {
+void conix_run(Conix* self) {
+    conix_print_args(self);
+}
+
+void conix_init(Conix* self, int argc, const char** argv) {
+    PRIVATE_INIT(self);
+    PRIVATE(self)->argc = argc;
+    PRIVATE(self)->argv = argv;
+}
+
+Conix* conix_create(int argc, const char** argv) {
     Conix* self = (Conix*) malloc(sizeof(Conix));
-    conix_init(self, title);
+    conix_init(self, argc, argv);
     return self;
 }
 
 void conix_reset(Conix* self) {
-    PRIVATE_RESET(self->conix_private);
+    PRIVATE_RESET(self);
 }
 
 void conix_destroy(Conix* self) {
