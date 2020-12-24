@@ -17,18 +17,26 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <malloc.h>
+#ifndef XCALC_MODULE_H
+#define XCALC_MODULE_H
 
-#include "option.h"
-#include "private.h"
-#include "module.h"
+#define PARAMS(args...) (self, ##args)
 
-PRIVATE_DATA {};
+#define CONSTRUCTOR(module, class, params, args...) \
+    class* module##_create(args) { \
+        class* self = (class*) malloc(sizeof(class)); \
+        module##_init params; \
+        return self; \
+    } \
+    void module##_init(class* self, ##args)
 
-CONSTRUCTOR(option, Option, PARAMS()) {
-    PRIVATE_INIT(self);
-}
+#define DESTRUCTOR(module, class) \
+    void module##_destroy(class* self) { \
+        if (self) { \
+            module##_reset(self); \
+            free(self); \
+        } \
+    } \
+    void module##_reset(class* self)
 
-DESTRUCTOR(option, Option) {
-    PRIVATE_RESET(self);
-}
+#endif // XCALC_MODULE_H

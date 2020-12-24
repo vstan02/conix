@@ -21,6 +21,7 @@
 
 #include "list.h"
 #include "private.h"
+#include "module.h"
 
 PRIVATE_DATA {
     ListNode* first;
@@ -82,26 +83,13 @@ void list_push(List* self, void* value) {
     }
 }
 
-void list_init(List* self) {
+CONSTRUCTOR(list, List, PARAMS()) {
     PRIVATE_INIT(self);
     PRIVATE(self)->length = 0;
     list_set_nodes(self, NULL);
 }
 
-List* list_create(void) {
-    List* self = (List*) malloc(sizeof(List));
-    list_init(self);
-    return self;
-}
-
-void list_reset(List* self) {
+DESTRUCTOR(list, List) {
     list_destroy_node(PRIVATE(self)->first);
     PRIVATE_RESET(self);
-}
-
-void list_destroy(List* self) {
-    if (self) {
-        list_reset(self);
-        free(self);
-    }
 }

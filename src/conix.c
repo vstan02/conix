@@ -22,6 +22,7 @@
 
 #include "conix.h"
 #include "private.h"
+#include "module.h"
 
 PRIVATE_DATA {
     int argc;
@@ -38,25 +39,12 @@ void conix_run(Conix* self) {
     conix_print_args(self);
 }
 
-void conix_init(Conix* self, int argc, const char** argv) {
+CONSTRUCTOR(conix, Conix, PARAMS(argc, argv), int argc, const char** argv) {
     PRIVATE_INIT(self);
     PRIVATE(self)->argc = argc;
     PRIVATE(self)->argv = argv;
 }
 
-Conix* conix_create(int argc, const char** argv) {
-    Conix* self = (Conix*) malloc(sizeof(Conix));
-    conix_init(self, argc, argv);
-    return self;
-}
-
-void conix_reset(Conix* self) {
+DESTRUCTOR(conix, Conix) {
     PRIVATE_RESET(self);
-}
-
-void conix_destroy(Conix* self) {
-    if (self) {
-        conix_reset(self);
-        free(self);
-    }
 }
