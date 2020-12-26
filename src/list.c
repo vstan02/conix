@@ -63,8 +63,14 @@ void* list_get(List* self) {
     return list_get_size(self) ? PRIVATE(self)->current->data : NULL;
 }
 
+void list_to_first(List* self) {
+    if (list_get_size(self)) {
+        PRIVATE(self)->current = PRIVATE(self)->first;
+    }
+}
+
 void list_to_next(List* self) {
-    if (PRIVATE(self)->current) {
+    if (list_exists(self)) {
         PRIVATE(self)->current = PRIVATE(self)->current->next;
     }
 }
@@ -76,7 +82,6 @@ void list_push(List* self, void* value) {
             list_set_nodes(self, node);
         } else {
             node->next = PRIVATE(self)->first;
-            PRIVATE(self)->first->next = node;
             PRIVATE(self)->first = node;
         }
         ++PRIVATE(self)->length;

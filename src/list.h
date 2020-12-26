@@ -40,6 +40,8 @@ bool list_is_empty(List* self);
 
 bool list_exists(List* self);
 void* list_get(List* self);
+
+void list_to_first(List* self);
 void list_to_next(List* self);
 
 void list_push(List* self, void* value);
