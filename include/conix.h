@@ -21,9 +21,13 @@
 #define CONIX_CONIX_H
 
 typedef struct t_Conix Conix;
+typedef void (*Function)(void);
+
 struct t_Conix {
     void* private;
 };
+
+void conix_add_option(Conix* self, const char* name, Function handle);
 
 void conix_run(Conix* self);
 

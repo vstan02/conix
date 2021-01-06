@@ -17,39 +17,37 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_LIST_H
-#define CONIX_LIST_H
+#include <string.h>
 
-#include <inttypes.h>
-#include <stdbool.h>
+#include "private.h"
+#include "module.h"
+#include "string.h"
 
-typedef struct t_List List;
-typedef struct t_ListNode ListNode;
-
-struct t_ListNode {
-    void* data;
-    ListNode* next;
+PRIVATE_DATA {
+    uint8_t length;
+    char* content;
 };
 
-struct t_List {
-    void* private;
-};
+bool string_compare(String* self, const char* target) {
+    return !strcmp(PRIVATE(self)->content, target);
+}
 
-uint8_t list_get_size(List* self);
-bool list_is_empty(List* self);
+uint8_t string_get_size(String* self) {
+    return self ? PRIVATE(self)->length : 0;
+}
 
-bool list_exists(List* self);
-void* list_get(List* self);
+const char* string_get_content(String* self) {
+    return self ? PRIVATE(self)->content : NULL;
+}
 
-void list_to_first(List* self);
-void list_to_next(List* self);
+CONSTRUCTOR(string, String, PARAMS(content), const char* content) {
+    PRIVATE_INIT(self);
+    PRIVATE(self)->length = strlen(content);
+    PRIVATE(self)->content = (char*) malloc(PRIVATE(self)->length);
+    strcpy(PRIVATE(self)->content, content);
+}
 
-void list_push(List* self, void* value);
-
-void list_init(List* self);
-List* list_create(void);
-
-void list_reset(List* self);
-void list_destroy(List* self);
-
-#endif // CONIX_LIST_H
+DESTRUCTOR(string, String) {
+    free(PRIVATE(self)->content);
+    PRIVATE_RESET(self);
+}

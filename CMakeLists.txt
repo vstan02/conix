@@ -7,6 +7,8 @@ set(
     CONIX_SOURCES
     src/conix.c
     src/list.c
+    src/option.c
+    src/string.c
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)

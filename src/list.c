@@ -17,8 +17,6 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <malloc.h>
-
 #include "list.h"
 #include "private.h"
 #include "module.h"
@@ -26,7 +24,7 @@
 PRIVATE_DATA {
     ListNode* first;
     ListNode* current;
-    int8_t length;
+    uint8_t length;
 };
 
 static ListNode* list_create_node(void* data) {
@@ -47,7 +45,7 @@ static void list_set_nodes(List* self, ListNode* node) {
     PRIVATE(self)->first = PRIVATE(self)->current = node;
 }
 
-int8_t list_get_size(List* self) {
+uint8_t list_get_size(List* self) {
     return self ? PRIVATE(self)->length : 0;
 }
 

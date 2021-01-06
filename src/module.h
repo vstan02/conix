@@ -20,6 +20,8 @@
 #ifndef XCALC_MODULE_H
 #define XCALC_MODULE_H
 
+#include <malloc.h>
+
 #define PARAMS(args...) (self, ##args)
 
 #define CONSTRUCTOR(module, class, params, args...) \

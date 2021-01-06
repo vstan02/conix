@@ -17,39 +17,26 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_LIST_H
-#define CONIX_LIST_H
+#ifndef CONIX_STRING_H
+#define CONIX_STRING_H
 
 #include <inttypes.h>
 #include <stdbool.h>
 
-typedef struct t_List List;
-typedef struct t_ListNode ListNode;
-
-struct t_ListNode {
-    void* data;
-    ListNode* next;
-};
-
-struct t_List {
+typedef struct t_String String;
+struct t_String {
     void* private;
 };
 
-uint8_t list_get_size(List* self);
-bool list_is_empty(List* self);
+bool string_compare(String* self, const char* target);
 
-bool list_exists(List* self);
-void* list_get(List* self);
+uint8_t string_get_size(String* self);
+const char* string_get_content(String* self);
 
-void list_to_first(List* self);
-void list_to_next(List* self);
+void string_init(String* self, const char* content);
+String* string_create(const char* content);
 
-void list_push(List* self, void* value);
+void string_reset(String* self);
+void string_destroy(String* self);
 
-void list_init(List* self);
-List* list_create(void);
-
-void list_reset(List* self);
-void list_destroy(List* self);
-
-#endif // CONIX_LIST_H
+#endif // CONIX_STRING_H
