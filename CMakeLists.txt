@@ -7,11 +7,13 @@ set(
     CONIX_SOURCES
     src/conix.c
     src/list.c
+    src/map.c
 )
 
 set(
     CONIX_TESTS
     test/list_test.c
+    test/map_test.c
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)

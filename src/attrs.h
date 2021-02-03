@@ -22,4 +22,4 @@
 
 #define NONNULL(args...) __attribute__((nonnull(args)))
 
-#endif //CONIX_ATTRS_H
+#endif // CONIX_ATTRS_H

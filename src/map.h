@@ -1,4 +1,4 @@
-/* Test - Tests for Conix library
+/* Map - Hash map
  * Copyright (C) 2020 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of xCalc.
@@ -17,13 +17,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_TEST_H
-#define CONIX_TEST_H
+#ifndef CONIX_MAP_H
+#define CONIX_MAP_H
 
-#define TEST_LIST_PATH "/list"
-#define TEST_MAP_PATH "/map"
+#include "attrs.h"
 
-void test_list(void);
-void test_map(void);
+typedef struct t_Map Map;
 
-#endif // CONIX_TEST_H
+extern Map* map_create(void);
+extern void map_destroy(Map* self);
+
+extern NONNULL(1) void* map_get(Map* self, const char* key);
+extern NONNULL(1) void map_put(Map* self, const char* key, void* value);
+
+#endif // CONIX_MAP_H

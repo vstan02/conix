@@ -1,4 +1,4 @@
-/* Test - Tests for Conix library
+/* Map test - Tests for hash map
  * Copyright (C) 2020 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of xCalc.
@@ -20,10 +20,30 @@
 #include <glib.h>
 
 #include "test.h"
+#include "map.h"
 
-int main(int argc, char** argv) {
-    g_test_init(&argc, &argv);
-    test_list();
-    test_map();
-    return g_test_run();
+static void test_map_map(void);
+static void test_map_put_get(void);
+
+void test_map(void) {
+    g_test_add_func(TEST_MAP_PATH "/map", test_map_map);
+    g_test_add_func(TEST_MAP_PATH "/put & get", test_map_put_get);
+}
+
+static void test_map_map(void) {
+    Map* map = map_create();
+    g_assert_nonnull(map);
+    map_destroy(map);
+}
+
+static void test_map_put_get(void) {
+    Map* map = map_create();
+    map_put(map, "1", "434");
+    map_put(map, "2", "349");
+    map_put(map, "3", "555");
+    g_assert_cmpstr(map_get(map, "2"), ==, "349");
+    g_assert_cmpstr(map_get(map, "1"), ==, "434");
+    g_assert_cmpstr(map_get(map, "3"), ==, "555");
+    g_assert_null(map_get(map, "test"));
+    map_destroy(map);
 }
