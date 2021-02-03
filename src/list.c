@@ -1,9 +1,9 @@
-/* Conix - Command line interface building library
+/* List - Simple linked list
  * Copyright (C) 2020 Stan Vlad <vstan02@protonmail.com>
  *
- * This file is part of Conix.
+ * This file is part of xCalc.
  *
- * Conix is free software: you can redistribute it and/or modify
+ * xCalc is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -17,82 +17,65 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "list.h"
-#include "private.h"
-#include "module.h"
+#include <malloc.h>
 
-PRIVATE_DATA {
-    ListNode* first;
+#include "list.h"
+
+typedef struct t_ListNode ListNode;
+
+struct t_List {
     ListNode* current;
-    uint8_t length;
+    ListNode* head;
 };
 
-static ListNode* list_create_node(void* data) {
+struct t_ListNode {
+    void* data;
+    ListNode* next;
+};
+
+static void list_node_destroy(ListNode*);
+
+extern List* list_create(void) {
+    List* self = (List*) malloc(sizeof(List));
+    self->current = self->head = NULL;
+    return self;
+}
+
+extern void list_destroy(List* self) {
+    if (self) {
+        list_node_destroy(self->current);
+        free(self);
+    }
+}
+
+extern bool list_exists(List* self) {
+    return (_Bool) self->current;
+}
+
+extern void* list_get(List* self) {
+    return self->current ? self->current->data : NULL;
+}
+
+extern void list_head(List* self) {
+    self->current = self->head;
+}
+
+extern void list_next(List* self) {
+    if (self->current) {
+        self->current = self->current->next;
+    }
+}
+
+extern void list_push(List* self, void* data) {
     ListNode* node = (ListNode*) malloc(sizeof(ListNode));
     node->data = data;
-    node->next = NULL;
-    return node;
+    node->next = self->head;
+    self->head = node;
 }
 
-static void list_destroy_node(ListNode* node) {
+static void list_node_destroy(ListNode* node) {
     if (node) {
-        list_destroy_node(node->next);
+        list_node_destroy(node->next);
         free(node);
     }
-}
-
-static void list_set_nodes(List* self, ListNode* node) {
-    PRIVATE(self)->first = PRIVATE(self)->current = node;
-}
-
-uint8_t list_get_size(List* self) {
-    return self ? PRIVATE(self)->length : 0;
-}
-
-bool list_is_empty(List* self) {
-    return !list_get_size(self);
-}
-
-bool list_exists(List* self) {
-    return self && PRIVATE(self)->current;
-}
-
-void* list_get(List* self) {
-    return list_get_size(self) ? PRIVATE(self)->current->data : NULL;
-}
-
-void list_to_first(List* self) {
-    if (list_get_size(self)) {
-        PRIVATE(self)->current = PRIVATE(self)->first;
-    }
-}
-
-void list_to_next(List* self) {
-    if (list_exists(self)) {
-        PRIVATE(self)->current = PRIVATE(self)->current->next;
-    }
-}
-
-void list_push(List* self, void* value) {
-    if (self) {
-        ListNode* node = list_create_node(value);
-        if (list_is_empty(self)) {
-            list_set_nodes(self, node);
-        } else {
-            node->next = PRIVATE(self)->first;
-            PRIVATE(self)->first = node;
-        }
-        ++PRIVATE(self)->length;
-    }
-}
-
-CONSTRUCTOR(list, List, PARAMS()) {
-    PRIVATE_INIT(self);
-    PRIVATE(self)->length = 0;
-    list_set_nodes(self, NULL);
-}
-
-DESTRUCTOR(list, List) {
-    list_destroy_node(PRIVATE(self)->first);
-    PRIVATE_RESET(self);
 }

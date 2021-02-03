@@ -1,9 +1,9 @@
-/* Conix - Command line interface building library
+/* List - Simple linked list
  * Copyright (C) 2020 Stan Vlad <vstan02@protonmail.com>
  *
- * This file is part of Conix.
+ * This file is part of xCalc.
  *
- * Conix is free software: you can redistribute it and/or modify
+ * xCalc is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -20,36 +20,32 @@
 #ifndef CONIX_LIST_H
 #define CONIX_LIST_H
 
-#include <inttypes.h>
-#include <stdbool.h>
+#include <stddef.h>
+
+#include "bool.h"
+#include "attrs.h"
 
 typedef struct t_List List;
-typedef struct t_ListNode ListNode;
 
-struct t_ListNode {
-    void* data;
-    ListNode* next;
-};
+extern List* list_create(void);
+extern void list_destroy(List* self);
 
-struct t_List {
-    void* private;
-};
+extern NONNULL(1) bool list_exists(List* self);
+extern NONNULL(1) void* list_get(List* self);
 
-uint8_t list_get_size(List* self);
-bool list_is_empty(List* self);
+extern NONNULL(1) void list_head(List* self);
+extern NONNULL(1) void list_next(List* self);
 
-bool list_exists(List* self);
-void* list_get(List* self);
+extern NONNULL(1) void list_push(List* self, void* data);
 
-void list_to_first(List* self);
-void list_to_next(List* self);
-
-void list_push(List* self, void* value);
-
-void list_init(List* self);
-List* list_create(void);
-
-void list_reset(List* self);
-void list_destroy(List* self);
+#define list_foreach(self, item, body) \
+    { \
+        list_head(self); \
+        while (list_exists(self)) { \
+            item = list_get(self); \
+            body; \
+            list_next(self); \
+        } \
+    }
 
 #endif // CONIX_LIST_H

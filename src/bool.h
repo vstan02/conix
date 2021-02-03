@@ -1,9 +1,9 @@
-/* Conix - Command line interface building library
+/* Bool - Boolean data type
  * Copyright (C) 2020 Stan Vlad <vstan02@protonmail.com>
  *
- * This file is part of Conix.
+ * This file is part of xCalc.
  *
- * Conix is free software: you can redistribute it and/or modify
+ * xCalc is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -17,26 +17,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_STRING_H
-#define CONIX_STRING_H
+#ifndef CONIX_BOOL_H
+#define CONIX_BOOL_H
 
-#include <inttypes.h>
-#include <stdbool.h>
+typedef enum { false, true } bool;
 
-typedef struct t_String String;
-struct t_String {
-    void* private;
-};
-
-bool string_compare(String* self, const char* target);
-
-uint8_t string_get_size(String* self);
-const char* string_get_content(String* self);
-
-void string_init(String* self, const char* content);
-String* string_create(const char* content);
-
-void string_reset(String* self);
-void string_destroy(String* self);
-
-#endif // CONIX_STRING_H
+#endif // CONIX_BOOL_H

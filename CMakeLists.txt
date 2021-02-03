@@ -7,8 +7,11 @@ set(
     CONIX_SOURCES
     src/conix.c
     src/list.c
-    src/option.c
-    src/string.c
+)
+
+set(
+    CONIX_TESTS
+    test/list_test.c
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -18,7 +21,7 @@ add_library(conix ${CONIX_SOURCES})
 add_executable(demo demo/main.c)
 target_link_libraries(demo conix)
 
-add_executable(test test/main.c test/list_test.c)
+add_executable(test test/main.c ${CONIX_TESTS})
 target_include_directories(test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(test conix)
 

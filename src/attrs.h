@@ -1,9 +1,9 @@
-/* Conix - Command line interface building library
+/* Attrs - C attributes
  * Copyright (C) 2020 Stan Vlad <vstan02@protonmail.com>
  *
- * This file is part of Conix.
+ * This file is part of xCalc.
  *
- * Conix is free software: you can redistribute it and/or modify
+ * xCalc is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -17,25 +17,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_OPTION_H
-#define CONIX_OPTION_H
+#ifndef CONIX_ATTRS_H
+#define CONIX_ATTRS_H
 
-#include <stdbool.h>
+#define NONNULL(args...) __attribute__((nonnull(args)))
 
-typedef struct t_Option Option;
-typedef void (*Callback)(void);
-
-struct t_Option {
-    void* private;
-};
-
-bool option_search(Option* self, const char* id);
-void option_handle(Option* self);
-
-void option_init(Option* self, const char* name, Callback handler);
-Option* option_create(const char* name, Callback handler);
-
-void option_reset(Option* self);
-void option_destroy(Option* self);
-
-#endif // CONIX_OPTION_H
+#endif //CONIX_ATTRS_H

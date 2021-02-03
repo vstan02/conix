@@ -21,20 +21,19 @@
 #define CONIX_CONIX_H
 
 typedef struct t_Conix Conix;
-typedef void (*Function)(void);
+typedef struct t_ConixOption ConixOption;
+typedef void (*ConixHandler)(void*);
 
-struct t_Conix {
-    void* private;
+struct t_ConixOption {
+    const char* name;
+    const char* description;
+    const ConixHandler handler;
 };
 
-void conix_add_option(Conix* self, const char* name, Function handle);
+extern Conix* conix_create(int argc, const char** argv);
+extern void conix_destroy(Conix* self);
 
-void conix_run(Conix* self);
-
-void conix_init(Conix* self, int argc, const char** argv);
-Conix* conix_create(int argc, const char** argv);
-
-void conix_reset(Conix* self);
-void conix_destroy(Conix* self);
+extern void conix_run(Conix* self);
+extern void conix_add_option(Conix* self, ConixOption option);
 
 #endif // CONIX_CONIX_H
