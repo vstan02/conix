@@ -72,6 +72,12 @@ extern void conix_add_option(Conix* self, ConixOption option) {
     }
 }
 
+extern void conix_add_options(Conix* self, size_t count, ConixOption* options) {
+    for (size_t index = 0; index < count; ++index) {
+        conix_add_option(self, options[index]);
+    }
+}
+
 static char* conix_str_copy(const char* string) {
     size_t size = strlen(string);
     char* result = malloc(size * sizeof(char));

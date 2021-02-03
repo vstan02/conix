@@ -34,6 +34,8 @@ extern Conix* conix_create(int argc, const char** argv);
 extern void conix_destroy(Conix* self);
 
 extern void conix_run(Conix* self);
+
 extern void conix_add_option(Conix* self, ConixOption option);
+extern void conix_add_options(Conix* self, size_t count, ConixOption* options);
 
 #endif // CONIX_CONIX_H
