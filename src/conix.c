@@ -38,6 +38,7 @@
 typedef struct t_ConixInfo ConixInfo;
 
 struct t_Conix {
+    const char* name;
     int argc;
     const char** argv;
     Map* options;
@@ -62,8 +63,9 @@ ConixOption def_help = {
     .handler = (ConixHandler) conix_help
 };
 
-extern Conix* conix_create(int argc, const char** argv) {
+extern Conix* conix_create(const char* app, int argc, const char** argv) {
     Conix* self = (Conix*) malloc(sizeof(Conix));
+    self->name = app;
     self->argc = argc;
     self->argv = argv;
     self->max_size = 0;
@@ -133,7 +135,7 @@ static ConixInfo* conix_info_create(const char* name, const char* description) {
 }
 
 static void conix_help(Conix* self) {
-    puts("Usage: app [option]\nOptions:");
+    printf("Usage: %s [option]\nOptions:\n", self->name);
     list_foreach(self->info, ConixInfo* item, {
         printf(" %*s %s\n", -(int)(self->max_size + 3), item->name, item->description);
     })

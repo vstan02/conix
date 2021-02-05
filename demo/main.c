@@ -4,10 +4,6 @@
 
 #define OPTION_COUNT 2
 
-void print_hello(void* data) {
-    puts("Hello World!");
-}
-
 void print_version(void* data) {
     puts("demo v1.0.0");
 }
@@ -22,8 +18,7 @@ ConixOption options[OPTION_COUNT] = {
 };
 
 int main(int argc, const char** argv) {
-    Conix* cli = conix_create(argc, argv);
-    conix_set_default(cli, print_hello);
+    Conix* cli = conix_create("test", argc, argv);
     conix_add_options(cli, OPTION_COUNT, options);
     conix_run(cli);
     conix_destroy(cli);
