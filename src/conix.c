@@ -36,6 +36,7 @@
     }
 
 typedef struct t_ConixInfo ConixInfo;
+typedef struct t_ConixOptHandler ConixOptHandler;
 
 struct t_Conix {
     const char* name;
@@ -52,8 +53,14 @@ struct t_ConixInfo {
     const char* description;
 };
 
+struct t_ConixOptHandler {
+    ConixHandler handle;
+    void* payload;
+};
+
 static char* conix_str_copy(const char*);
 static ConixInfo* conix_info_create(const char*, const char*);
+static ConixOptHandler* conix_handler_create(ConixHandler, void*);
 
 static void conix_help(Conix* self);
 
@@ -87,8 +94,10 @@ extern void conix_destroy(Conix* self) {
 extern void conix_run(Conix* self) {
     if (self) {
         if (self->argc > 1) {
-            ConixHandler handle = (ConixHandler) map_get(self->options, self->argv[1]);
-            return handle != NULL ? handle(self) : self->def_handler(self);
+            ConixOptHandler* handler = (ConixOptHandler*) map_get(self->options, self->argv[1]);
+            return handler != NULL
+                ? handler->handle(handler->payload)
+                : self->def_handler(self);
         }
         self->def_handler(self);
     }
@@ -109,7 +118,7 @@ extern void conix_add_option(Conix* self, ConixOption option) {
 
         list_push(self->info, conix_info_create(option.name, option.description));
         tokenize(option.name, OPTION_DELIMIT, id, {
-            map_put(self->options, id, option.handler);
+            map_put(self->options, id, conix_handler_create(option.handler, (void*) option.payload));
         })
     }
 }
@@ -132,6 +141,13 @@ static ConixInfo* conix_info_create(const char* name, const char* description) {
     info->name = conix_str_copy(name);
     info->description = conix_str_copy(description);
     return info;
+}
+
+static ConixOptHandler* conix_handler_create(ConixHandler handle, void* payload) {
+    ConixOptHandler* opt_handler = (ConixOptHandler*) malloc(sizeof(ConixOptHandler));
+    opt_handler->handle = handle;
+    opt_handler->payload = payload;
+    return opt_handler;
 }
 
 static void conix_help(Conix* self) {

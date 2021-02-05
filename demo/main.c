@@ -4,8 +4,8 @@
 
 #define OPTION_COUNT 2
 
-void print_version(void* data) {
-    puts("demo v1.0.0");
+void print_version(char* version) {
+    printf("demo v%s\n", version);
 }
 
 void print_about(void* data) {
@@ -13,8 +13,8 @@ void print_about(void* data) {
 }
 
 ConixOption options[OPTION_COUNT] = {
-    { "-v, --version", "Display something", print_version },
-    { "-a, --about", "Display something", print_about }
+    { "-v, --version", "Display something", (ConixHandler) print_version, "0.1.0" },
+    { "-a, --about", "Display something", print_about, NULL }
 };
 
 int main(int argc, const char** argv) {

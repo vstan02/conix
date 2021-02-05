@@ -30,6 +30,7 @@ struct t_ConixOption {
     const char* name;
     const char* description;
     const ConixHandler handler;
+    const void* payload;
 };
 
 extern Conix* conix_create(const char* app, int argc, const char** argv);
