@@ -26,6 +26,15 @@
 
 #define OPTION_DELIMIT ", "
 
+#define tokenize(target, delimit, token, body) \
+    {                                          \
+        char* token = strtok(conix_str_copy(target), delimit); \
+        while (token) { \
+            body; \
+            token = strtok(NULL, delimit); \
+        } \
+    }
+
 typedef struct t_ConixInfo ConixInfo;
 
 struct t_Conix {
@@ -33,6 +42,8 @@ struct t_Conix {
     const char** argv;
     Map* options;
     List* info;
+    size_t max_size;
+    ConixHandler def_handler;
 };
 
 struct t_ConixInfo {
@@ -43,12 +54,23 @@ struct t_ConixInfo {
 static char* conix_str_copy(const char*);
 static ConixInfo* conix_info_create(const char*, const char*);
 
+static void conix_help(Conix* self);
+
+ConixOption def_help = {
+    .name = "-h, --help",
+    .description = "Display this information",
+    .handler = (ConixHandler) conix_help
+};
+
 extern Conix* conix_create(int argc, const char** argv) {
     Conix* self = (Conix*) malloc(sizeof(Conix));
     self->argc = argc;
     self->argv = argv;
+    self->max_size = 0;
     self->options = map_create();
     self->info = list_create();
+    self->def_handler = (ConixHandler) conix_help;
+    conix_add_option(self, def_help);
     return self;
 }
 
@@ -60,15 +82,33 @@ extern void conix_destroy(Conix* self) {
     }
 }
 
-extern void conix_run(Conix* self) {}
+extern void conix_run(Conix* self) {
+    if (self) {
+        if (self->argc > 1) {
+            ConixHandler handle = (ConixHandler) map_get(self->options, self->argv[1]);
+            return handle != NULL ? handle(self) : self->def_handler(self);
+        }
+        self->def_handler(self);
+    }
+}
+
+extern void conix_set_default(Conix* self, ConixHandler handler) {
+    if (self) {
+        self->def_handler = handler;
+    }
+}
 
 extern void conix_add_option(Conix* self, ConixOption option) {
-    list_push(self->info, conix_info_create(option.name, option.description));
+    if (self) {
+        size_t size = strlen(option.name);
+        if (size > self->max_size) {
+            self->max_size = size;
+        }
 
-    char* id = strtok(conix_str_copy(option.name), OPTION_DELIMIT);
-    while (id) {
-        map_put(self->options, id, option.handler);
-        id = strtok(NULL, OPTION_DELIMIT);
+        list_push(self->info, conix_info_create(option.name, option.description));
+        tokenize(option.name, OPTION_DELIMIT, id, {
+            map_put(self->options, id, option.handler);
+        })
     }
 }
 
@@ -79,7 +119,7 @@ extern void conix_add_options(Conix* self, size_t count, ConixOption* options) {
 }
 
 static char* conix_str_copy(const char* string) {
-    size_t size = strlen(string);
+    size_t size = strlen(string) + 1;
     char* result = malloc(size * sizeof(char));
     strcpy(result, string);
     return result;
@@ -90,4 +130,11 @@ static ConixInfo* conix_info_create(const char* name, const char* description) {
     info->name = conix_str_copy(name);
     info->description = conix_str_copy(description);
     return info;
+}
+
+static void conix_help(Conix* self) {
+    puts("Usage: app [option]\nOptions:");
+    list_foreach(self->info, ConixInfo* item, {
+        printf(" %*s %s\n", -(int)(self->max_size + 3), item->name, item->description);
+    })
 }
