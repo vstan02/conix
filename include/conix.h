@@ -24,22 +24,28 @@
 
 typedef struct t_Conix Conix;
 typedef struct t_ConixOption ConixOption;
-typedef void (*ConixHandler)(void*);
+typedef struct t_ConixHandler ConixHandler;
 
 struct t_ConixOption {
     const char* name;
     const char* description;
-    const ConixHandler handler;
-    const void* payload;
+    ConixHandler* handler;
+};
+
+struct t_ConixHandler {
+    void (*handle)(void*);
+    void* payload;
 };
 
 extern Conix* conix_create(const char* app, int argc, const char** argv);
 extern void conix_destroy(Conix* self);
 
 extern void conix_run(Conix* self);
-extern void conix_set_default(Conix* self, ConixHandler handler);
+extern void conix_set_default(Conix* self, ConixHandler* handler);
 
 extern void conix_add_option(Conix* self, ConixOption option);
 extern void conix_add_options(Conix* self, size_t count, ConixOption* options);
+
+extern ConixHandler* conix_handler_create(void (*handle)(void*), void* payload);
 
 #endif // CONIX_CONIX_H

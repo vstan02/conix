@@ -36,7 +36,6 @@
     }
 
 typedef struct t_ConixInfo ConixInfo;
-typedef struct t_ConixOptHandler ConixOptHandler;
 
 struct t_Conix {
     const char* name;
@@ -45,7 +44,7 @@ struct t_Conix {
     Map* options;
     List* info;
     size_t max_size;
-    ConixHandler def_handler;
+    ConixHandler* def_handler;
 };
 
 struct t_ConixInfo {
@@ -53,22 +52,10 @@ struct t_ConixInfo {
     const char* description;
 };
 
-struct t_ConixOptHandler {
-    ConixHandler handle;
-    void* payload;
-};
-
 static char* conix_str_copy(const char*);
 static ConixInfo* conix_info_create(const char*, const char*);
-static ConixOptHandler* conix_handler_create(ConixHandler, void*);
 
 static void conix_help(Conix* self);
-
-ConixOption def_help = {
-    .name = "-h, --help",
-    .description = "Display this information",
-    .handler = (ConixHandler) conix_help
-};
 
 extern Conix* conix_create(const char* app, int argc, const char** argv) {
     Conix* self = (Conix*) malloc(sizeof(Conix));
@@ -78,8 +65,13 @@ extern Conix* conix_create(const char* app, int argc, const char** argv) {
     self->max_size = 0;
     self->options = map_create();
     self->info = list_create();
-    self->def_handler = (ConixHandler) conix_help;
-    conix_add_option(self, def_help);
+    self->def_handler = conix_handler_create((void (*)(void*)) conix_help, self);
+
+    conix_add_option(self, (ConixOption) {
+        .name = "-h, --help",
+        .description = "Display this information",
+        .handler = self->def_handler
+    });
     return self;
 }
 
@@ -94,16 +86,16 @@ extern void conix_destroy(Conix* self) {
 extern void conix_run(Conix* self) {
     if (self) {
         if (self->argc > 1) {
-            ConixOptHandler* handler = (ConixOptHandler*) map_get(self->options, self->argv[1]);
+            ConixHandler* handler = (ConixHandler*) map_get(self->options, self->argv[1]);
             return handler != NULL
                 ? handler->handle(handler->payload)
-                : self->def_handler(self);
+                : self->def_handler->handle(self->def_handler->payload);
         }
-        self->def_handler(self);
+        self->def_handler->handle(self->def_handler->payload);
     }
 }
 
-extern void conix_set_default(Conix* self, ConixHandler handler) {
+extern void conix_set_default(Conix* self, ConixHandler* handler) {
     if (self) {
         self->def_handler = handler;
     }
@@ -118,7 +110,7 @@ extern void conix_add_option(Conix* self, ConixOption option) {
 
         list_push(self->info, conix_info_create(option.name, option.description));
         tokenize(option.name, OPTION_DELIMIT, id, {
-            map_put(self->options, id, conix_handler_create(option.handler, (void*) option.payload));
+            map_put(self->options, id, option.handler);
         })
     }
 }
@@ -127,6 +119,13 @@ extern void conix_add_options(Conix* self, size_t count, ConixOption* options) {
     for (size_t index = 0; index < count; ++index) {
         conix_add_option(self, options[index]);
     }
+}
+
+extern ConixHandler* conix_handler_create(void (*handle)(void*), void* payload) {
+    ConixHandler* handler = (ConixHandler*) malloc(sizeof(ConixHandler));
+    handler->handle = handle;
+    handler->payload = payload;
+    return handler;
 }
 
 static char* conix_str_copy(const char* string) {
@@ -141,13 +140,6 @@ static ConixInfo* conix_info_create(const char* name, const char* description) {
     info->name = conix_str_copy(name);
     info->description = conix_str_copy(description);
     return info;
-}
-
-static ConixOptHandler* conix_handler_create(ConixHandler handle, void* payload) {
-    ConixOptHandler* opt_handler = (ConixOptHandler*) malloc(sizeof(ConixOptHandler));
-    opt_handler->handle = handle;
-    opt_handler->payload = payload;
-    return opt_handler;
 }
 
 static void conix_help(Conix* self) {
