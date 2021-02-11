@@ -33,17 +33,17 @@ struct t_ListNode {
     ListNode* next;
 };
 
-static void list_node_destroy(ListNode*);
+static void list_node_destroy(ListNode*, void (*)(void*));
 
 extern List* list_create(void) {
-    List* self = (List*) malloc(sizeof(List));
+    List *self = (List *) malloc(sizeof(List));
     self->current = self->head = NULL;
     return self;
 }
 
-extern void list_destroy(List* self) {
+extern void list_destroy(List* self, void (*destroy)(void*)) {
     if (self) {
-        list_node_destroy(self->current);
+        list_node_destroy(self->current, destroy);
         free(self);
     }
 }
@@ -73,9 +73,10 @@ extern void list_push(List* self, void* data) {
     self->head = node;
 }
 
-static void list_node_destroy(ListNode* node) {
+static void list_node_destroy(ListNode* node, void (*destroy)(void*)) {
     if (node) {
-        list_node_destroy(node->next);
+        destroy(node->data);
+        list_node_destroy(node->next, destroy);
         free(node);
     }
 }

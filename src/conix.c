@@ -26,8 +26,9 @@
 
 #define OPTION_DELIMIT ", "
 
+#define destroyer(func) ((void (*)(void*)) func)
 #define tokenize(target, delimit, token, body) \
-    {                                          \
+    { \
         char* token = strtok(conix_str_copy(target), delimit); \
         while (token) { \
             body; \
@@ -78,7 +79,7 @@ extern Conix* conix_create(const char* app, int argc, const char** argv) {
 extern void conix_destroy(Conix* self) {
     if (self) {
         map_destroy(self->options);
-        list_destroy(self->info);
+        list_destroy(self->info, destroyer(conix_info_create));
         free(self);
     }
 }
@@ -140,6 +141,14 @@ static ConixInfo* conix_info_create(const char* name, const char* description) {
     info->name = conix_str_copy(name);
     info->description = conix_str_copy(description);
     return info;
+}
+
+static void conix_info_destroy(ConixInfo* info) {
+    if (info) {
+        free((void*) info->name);
+        free((void*) info->description);
+        free(info);
+    }
 }
 
 static void conix_help(Conix* self) {

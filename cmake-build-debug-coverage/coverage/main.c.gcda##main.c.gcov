@@ -1,0 +1,31 @@
+        -:    0:Source:/home/vstan/Documents/Dev/conix/demo/main.c
+        -:    0:Graph:/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/CMakeFiles/demo.dir/demo/main.c.gcno
+        -:    0:Data:/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/CMakeFiles/demo.dir/demo/main.c.gcda
+        -:    0:Runs:1
+        -:    1:#include <stdio.h>
+        -:    2:
+        -:    3:#include "conix.h"
+        -:    4:
+        -:    5:#define OPTION_COUNT 2
+        -:    6:
+    #####:    7:void print_version(char* version) {
+    #####:    8:    printf("demo v%s\n", version);
+    %%%%%:    8-block  0
+    #####:    9:}
+        -:   10:
+    #####:   11:void print_about(void* data) {
+    #####:   12:    puts("What do you want to know about me?");
+    %%%%%:   12-block  0
+    #####:   13:}
+        -:   14:
+        1:   15:int main(int argc, const char** argv) {
+        1:   16:    Conix* cli = conix_create("test", argc, argv);
+        1:   16-block  0
+        1:   17:    conix_add_options(cli, OPTION_COUNT, (ConixOption[]) {
+        1:   18:        { "-v, --version", "Display something", conix_handler_create(print_version, "0.1.0") },
+        1:   19:        { "-a, --about", "Display something", conix_handler_create(print_about, NULL) },
+        -:   20:    });
+        1:   21:    conix_run(cli);
+        1:   22:    conix_destroy(cli);
+        1:   23:    return 0;
+        -:   24:}

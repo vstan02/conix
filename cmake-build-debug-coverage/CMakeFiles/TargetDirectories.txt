@@ -1,0 +1,5 @@
+/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/CMakeFiles/rebuild_cache.dir
+/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/CMakeFiles/conix.dir
+/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/CMakeFiles/test.dir
+/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/CMakeFiles/demo.dir
+/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/CMakeFiles/edit_cache.dir

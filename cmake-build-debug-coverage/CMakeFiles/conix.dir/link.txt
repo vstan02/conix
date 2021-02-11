@@ -1,0 +1,2 @@
+/usr/bin/ar qc libconix.a  CMakeFiles/conix.dir/src/conix.c.o CMakeFiles/conix.dir/src/list.c.o CMakeFiles/conix.dir/src/map.c.o
+/usr/bin/ranlib libconix.a

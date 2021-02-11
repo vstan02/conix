@@ -1,0 +1,20 @@
+/home/vstan/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/203.6682.181/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage -G "CodeBlocks - Unix Makefiles" /home/vstan/Documents/Dev/conix
+-- The C compiler identification is GNU 9.3.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc - works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Found PkgConfig: /usr/bin/pkg-config (found version "0.29.1") 
+-- Checking for module 'gtk+-3.0'
+--   Found gtk+-3.0, version 3.24.20
+-- Configuring done
+-- Generating done
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    CMAKE_CXX_FLAGS
+
+
+-- Build files have been written to: /home/vstan/Documents/Dev/conix/cmake-build-debug-coverage

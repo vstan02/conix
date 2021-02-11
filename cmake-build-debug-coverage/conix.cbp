@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="conix"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="conix">
+				<Option output="/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/libconix.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vstan/Documents/Dev/conix/include"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/fribidi"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/uuid"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng16"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/libmount"/>
+					<Add directory="/usr/include/blkid"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 conix"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="conix/fast">
+				<Option output="/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/libconix.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vstan/Documents/Dev/conix/include"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/fribidi"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/uuid"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng16"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/libmount"/>
+					<Add directory="/usr/include/blkid"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 conix/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="test">
+				<Option output="/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vstan/Documents/Dev/conix/include"/>
+					<Add directory="/home/vstan/Documents/Dev/conix/src"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/fribidi"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/uuid"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng16"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/libmount"/>
+					<Add directory="/usr/include/blkid"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 test"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="test/fast">
+				<Option output="/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vstan/Documents/Dev/conix/include"/>
+					<Add directory="/home/vstan/Documents/Dev/conix/src"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/fribidi"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/uuid"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng16"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/libmount"/>
+					<Add directory="/usr/include/blkid"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 test/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="demo">
+				<Option output="/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/demo" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vstan/Documents/Dev/conix/include"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/fribidi"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/uuid"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng16"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/libmount"/>
+					<Add directory="/usr/include/blkid"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 demo"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="demo/fast">
+				<Option output="/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/demo" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vstan/Documents/Dev/conix/include"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/fribidi"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/uuid"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng16"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/libmount"/>
+					<Add directory="/usr/include/blkid"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 demo/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/vstan/Documents/Dev/conix/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/vstan/Documents/Dev/conix/demo/main.c">
+			<Option target="demo"/>
+		</Unit>
+		<Unit filename="/home/vstan/Documents/Dev/conix/src/conix.c">
+			<Option target="conix"/>
+		</Unit>
+		<Unit filename="/home/vstan/Documents/Dev/conix/src/list.c">
+			<Option target="conix"/>
+		</Unit>
+		<Unit filename="/home/vstan/Documents/Dev/conix/src/list.h">
+			<Option target="conix"/>
+		</Unit>
+		<Unit filename="/home/vstan/Documents/Dev/conix/src/map.c">
+			<Option target="conix"/>
+		</Unit>
+		<Unit filename="/home/vstan/Documents/Dev/conix/src/map.h">
+			<Option target="conix"/>
+		</Unit>
+		<Unit filename="/home/vstan/Documents/Dev/conix/test/list_test.c">
+			<Option target="test"/>
+		</Unit>
+		<Unit filename="/home/vstan/Documents/Dev/conix/test/main.c">
+			<Option target="test"/>
+		</Unit>
+		<Unit filename="/home/vstan/Documents/Dev/conix/test/map_test.c">
+			<Option target="test"/>
+		</Unit>
+		<Unit filename="/home/vstan/Documents/Dev/conix/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

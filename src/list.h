@@ -28,7 +28,7 @@
 typedef struct t_List List;
 
 extern List* list_create(void);
-extern void list_destroy(List* self);
+extern void list_destroy(List* self, void (*destroy)(void*));
 
 extern NONNULL(1) bool list_exists(List* self);
 extern NONNULL(1) void* list_get(List* self);

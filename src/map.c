@@ -25,6 +25,10 @@
 
 #define STORE_SIZE 10
 
+#define destroyer(func) ((void (*)(void*)) func)
+#define foreach(index, size) \
+    for (size_t index = 0; index < size; ++index)
+
 typedef struct t_MapItem MapItem;
 
 struct t_Map {
@@ -38,13 +42,18 @@ struct t_MapItem {
 
 static size_t map_hash(const char*);
 static MapItem* map_item_create(const char*, void*);
+static void map_item_destroy(MapItem*);
 
 extern Map* map_create(void) {
     return (Map*) malloc(sizeof(Map));
 }
 
 extern void map_destroy(Map* self) {
-    if (self) free(self);
+    if (self) {
+        foreach(index, STORE_SIZE)
+            list_destroy(self->store[index], destroyer(map_item_destroy));
+        free(self);
+    }
 }
 
 extern void* map_get(Map* self, const char* key) {
@@ -76,4 +85,12 @@ static MapItem* map_item_create(const char* key, void* value) {
     item->key = key;
     item->value = value;
     return item;
+}
+
+static void map_item_destroy(MapItem* item) {
+    if (item) {
+        free((void*) item->key);
+        free(item->value);
+        free(item);
+    }
 }
