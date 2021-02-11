@@ -1,1 +1,0 @@
-/usr/bin/cc --coverage -g   CMakeFiles/demo.dir/demo/main.c.o  -o demo  libconix.a 
