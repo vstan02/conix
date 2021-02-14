@@ -47,7 +47,6 @@ extern Conix* conix_create(ConixApp app, int argc, const char** argv);
 extern void conix_destroy(Conix* self);
 
 extern void conix_run(Conix* self);
-extern void conix_set_default(Conix* self, ConixHandler* handler);
 
 extern void conix_add_option(Conix* self, ConixOption option);
 extern void conix_add_options(Conix* self, size_t count, ConixOption* options);

@@ -89,7 +89,6 @@ static MapItem* map_item_create(const char* key, void* value) {
 
 static void map_item_destroy(MapItem* item) {
     if (item) {
-        free((void*) item->key);
         free(item->value);
         free(item);
     }

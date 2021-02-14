@@ -25,6 +25,7 @@
 #include "list.h"
 
 #define OPTION_DELIMIT ", "
+#define DEFAULT_OPTION "--default"
 
 #define destroyer(function) ((void (*)(void*)) function)
 
@@ -49,7 +50,6 @@ struct t_Conix {
     Map* options;
     List* info;
     size_t max_size;
-    ConixHandler* def_handler;
 };
 
 struct t_ConixInfo {
@@ -63,6 +63,7 @@ static void conix_info_destroy(ConixInfo*);
 
 static void conix_help(Conix* self);
 static void conix_version(Conix* self);
+static void conix_not_found(Conix* self);
 
 extern Conix* conix_create(ConixApp app, int argc, const char** argv) {
     Conix* self = (Conix*) malloc(sizeof(Conix));
@@ -72,9 +73,8 @@ extern Conix* conix_create(ConixApp app, int argc, const char** argv) {
     self->max_size = 0;
     self->options = map_create();
     self->info = list_create();
-    self->def_handler = handler(conix_help, self);
     conix_add_options(self, 2, (ConixOption[]) {
-        { "-h, --help", "Display this information", self->def_handler },
+        { "-h, --help", "Display this information", handler(conix_help, self) },
         { "-v, --version", "Display version information", handler(conix_version, self) },
     });
     return self;
@@ -90,19 +90,11 @@ extern void conix_destroy(Conix* self) {
 
 extern void conix_run(Conix* self) {
     if (self) {
-        if (self->argc > 1) {
-            ConixHandler* handler = (ConixHandler*) map_get(self->options, self->argv[1]);
-            return handler != NULL
-                ? handler->handle(handler->payload)
-                : self->def_handler->handle(self->def_handler->payload);
-        }
-        self->def_handler->handle(self->def_handler->payload);
-    }
-}
-
-extern void conix_set_default(Conix* self, ConixHandler* handler) {
-    if (self) {
-        self->def_handler = handler;
+        const char* option = self->argc > 1 ? self->argv[1] : DEFAULT_OPTION;
+        ConixHandler* handler = (ConixHandler*) map_get(self->options, option);
+        return handler != NULL
+            ? handler->handle(handler->payload)
+            : conix_not_found(self);
     }
 }
 
@@ -164,4 +156,12 @@ static void conix_help(Conix* self) {
 
 static void conix_version(Conix* self) {
     printf("%s v%s\n", self->app.name, self->app.version);
+}
+
+static void conix_not_found(Conix* self) {
+    ConixHandler* handler = (ConixHandler*) map_get(self->options, "*");
+    if (handler) {
+        return handler->handle(handler->payload);
+    }
+    printf("%s: Invalid option!\n", self->app.name);
 }
