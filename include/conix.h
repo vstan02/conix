@@ -23,8 +23,14 @@
 #include "stddef.h"
 
 typedef struct t_Conix Conix;
+typedef struct t_ConixApp ConixApp;
 typedef struct t_ConixOption ConixOption;
 typedef struct t_ConixHandler ConixHandler;
+
+struct t_ConixApp {
+    const char* name;
+    const char* version;
+};
 
 struct t_ConixOption {
     const char* name;
@@ -37,7 +43,7 @@ struct t_ConixHandler {
     void* payload;
 };
 
-extern Conix* conix_create(const char* app, int argc, const char** argv);
+extern Conix* conix_create(ConixApp app, int argc, const char** argv);
 extern void conix_destroy(Conix* self);
 
 extern void conix_run(Conix* self);

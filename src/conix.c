@@ -26,7 +26,11 @@
 
 #define OPTION_DELIMIT ", "
 
-#define destroyer(func) ((void (*)(void*)) func)
+#define destroyer(function) ((void (*)(void*)) function)
+
+#define handler(function, payload) \
+    conix_handler_create((void (*)(void*)) function, payload)
+
 #define tokenize(target, delimit, token, body) \
     { \
         char* token = strtok(conix_str_copy(target), delimit); \
@@ -39,7 +43,7 @@
 typedef struct t_ConixInfo ConixInfo;
 
 struct t_Conix {
-    const char* name;
+    ConixApp app;
     int argc;
     const char** argv;
     Map* options;
@@ -55,23 +59,23 @@ struct t_ConixInfo {
 
 static char* conix_str_copy(const char*);
 static ConixInfo* conix_info_create(const char*, const char*);
+static void conix_info_destroy(ConixInfo*);
 
 static void conix_help(Conix* self);
+static void conix_version(Conix* self);
 
-extern Conix* conix_create(const char* app, int argc, const char** argv) {
+extern Conix* conix_create(ConixApp app, int argc, const char** argv) {
     Conix* self = (Conix*) malloc(sizeof(Conix));
-    self->name = app;
+    self->app = app;
     self->argc = argc;
     self->argv = argv;
     self->max_size = 0;
     self->options = map_create();
     self->info = list_create();
-    self->def_handler = conix_handler_create((void (*)(void*)) conix_help, self);
-
-    conix_add_option(self, (ConixOption) {
-        .name = "-h, --help",
-        .description = "Display this information",
-        .handler = self->def_handler
+    self->def_handler = handler(conix_help, self);
+    conix_add_options(self, 2, (ConixOption[]) {
+        { "-h, --help", "Display this information", self->def_handler },
+        { "-v, --version", "Display version information", handler(conix_version, self) },
     });
     return self;
 }
@@ -79,7 +83,7 @@ extern Conix* conix_create(const char* app, int argc, const char** argv) {
 extern void conix_destroy(Conix* self) {
     if (self) {
         map_destroy(self->options);
-        list_destroy(self->info, destroyer(conix_info_create));
+        list_destroy(self->info, destroyer(conix_info_destroy));
         free(self);
     }
 }
@@ -152,8 +156,12 @@ static void conix_info_destroy(ConixInfo* info) {
 }
 
 static void conix_help(Conix* self) {
-    printf("Usage: %s [option]\nOptions:\n", self->name);
+    printf("Usage: %s [option]\nOptions:\n", self->app.name);
     list_foreach(self->info, ConixInfo* item, {
         printf(" %*s %s\n", -(int)(self->max_size + 3), item->name, item->description);
     })
+}
+
+static void conix_version(Conix* self) {
+    printf("%s v%s\n", self->app.name, self->app.version);
 }
