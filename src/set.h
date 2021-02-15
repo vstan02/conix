@@ -1,4 +1,4 @@
-/* List - Simple linked list
+/* Set - Set of unique values, without any particular order
  * Copyright (C) 2020 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
@@ -17,35 +17,32 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_LIST_H
-#define CONIX_LIST_H
+#ifndef CONIX_SET_H
+#define CONIX_SET_H
 
-#include <stddef.h>
-
-#include "bool.h"
 #include "attrs.h"
+#include "bool.h"
 
-typedef struct t_List List;
-
-extern List* list_create(void);
-extern void list_destroy(List* self, void (*destroy)(void*));
-
-extern NONNULL(1) bool list_exists(List* self);
-extern NONNULL(1) void* list_get(List* self);
-
-extern NONNULL(1) void list_head(List* self);
-extern NONNULL(1) void list_next(List* self);
-
-extern NONNULL(1) void list_push(List* self, void* data);
-
-#define list_foreach(self, item, body) \
+#define set_foreach(self, item, body) \
     { \
-        list_head(self); \
-        while (list_exists(self)) { \
-            item = list_get(self); \
+        set_first(self); \
+        while (set_exists(self)) { \
+            item = set_next(self); \
             body; \
-            list_next(self); \
         } \
     }
 
-#endif // CONIX_LIST_H
+typedef struct t_Set Set;
+typedef int (*Compare)(void*, void*);
+typedef void (*Destroy)(void*);
+
+extern Set* set_create(void);
+extern void set_destroy(Set* self, Destroy destroy);
+
+extern NONNULL(1) bool set_exists(Set* self);
+extern NONNULL(1) void set_first(Set* self);
+
+extern NONNULL(1) void* set_next(Set* self);
+extern NONNULL(1) void set_put(Set* self, void* value, Compare compare);
+
+#endif // CONIX_SET_H

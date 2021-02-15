@@ -8,6 +8,7 @@ set(
     src/conix.c
     src/list.c
     src/map.c
+    src/set.c
 )
 
 set(

@@ -1,7 +1,7 @@
 /* Map - Hash map
  * Copyright (C) 2020 Stan Vlad <vstan02@protonmail.com>
  *
- * This file is part of xCalc.
+ * This file is part of Conix.
  *
  * xCalc is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

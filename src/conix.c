@@ -21,8 +21,8 @@
 #include <string.h>
 
 #include "conix.h"
+#include "set.h"
 #include "map.h"
-#include "list.h"
 
 #define OPTION_DELIMIT ", "
 #define DEFAULT_OPTION "--default"
@@ -48,7 +48,7 @@ struct t_Conix {
     int argc;
     const char** argv;
     Map* options;
-    List* info;
+    Set* info;
     size_t max_size;
 };
 
@@ -58,8 +58,10 @@ struct t_ConixInfo {
 };
 
 static char* conix_str_copy(const char*);
+
 static ConixInfo* conix_info_create(const char*, const char*);
 static void conix_info_destroy(ConixInfo*);
+static int conix_info_cmp(ConixInfo*, ConixInfo*);
 
 static void conix_help(Conix* self);
 static void conix_version(Conix* self);
@@ -72,7 +74,7 @@ extern Conix* conix_create(ConixApp app, int argc, const char** argv) {
     self->argv = argv;
     self->max_size = 0;
     self->options = map_create();
-    self->info = list_create();
+    self->info = set_create();
     conix_add_options(self, 2, (ConixOption[]) {
         { "-h, --help", "Display this information", handler(conix_help, self) },
         { "-v, --version", "Display version information", handler(conix_version, self) },
@@ -83,7 +85,7 @@ extern Conix* conix_create(ConixApp app, int argc, const char** argv) {
 extern void conix_destroy(Conix* self) {
     if (self) {
         map_destroy(self->options);
-        list_destroy(self->info, destroyer(conix_info_destroy));
+        set_destroy(self->info, destroyer(conix_info_destroy));
         free(self);
     }
 }
@@ -105,7 +107,8 @@ extern void conix_add_option(Conix* self, ConixOption option) {
             self->max_size = size;
         }
 
-        list_push(self->info, conix_info_create(option.name, option.description));
+        ConixInfo* target = conix_info_create(option.name, option.description);
+        set_put(self->info, target, (Compare) conix_info_cmp);
         tokenize(option.name, OPTION_DELIMIT, id, {
             map_put(self->options, id, option.handler);
         })
@@ -147,9 +150,13 @@ static void conix_info_destroy(ConixInfo* info) {
     }
 }
 
+static int conix_info_cmp(ConixInfo* first, ConixInfo* second) {
+    return strcmp(first->name, second->name);
+}
+
 static void conix_help(Conix* self) {
     printf("Usage: %s [option]\nOptions:\n", self->app.name);
-    list_foreach(self->info, ConixInfo* item, {
+    set_foreach(self->info, ConixInfo* item, {
         printf(" %*s %s\n", -(int)(self->max_size + 3), item->name, item->description);
     })
 }
