@@ -20,37 +20,11 @@
 #ifndef CONIX_CONIX_H
 #define CONIX_CONIX_H
 
-#include "stddef.h"
+typedef struct t_CnxCli CnxCli;
 
-typedef struct t_Conix Conix;
-typedef struct t_ConixApp ConixApp;
-typedef struct t_ConixOption ConixOption;
-typedef struct t_ConixHandler ConixHandler;
+extern CnxCli* cnx_cli_init(const char* name, const char* version);
+extern void cnx_cli_free(CnxCli* cli);
 
-struct t_ConixApp {
-    const char* name;
-    const char* version;
-};
-
-struct t_ConixOption {
-    const char* name;
-    const char* description;
-    ConixHandler* handler;
-};
-
-struct t_ConixHandler {
-    void (*handle)(void*);
-    void* payload;
-};
-
-extern Conix* conix_create(ConixApp app, int argc, const char** argv);
-extern void conix_destroy(Conix* self);
-
-extern void conix_run(Conix* self);
-
-extern void conix_add_option(Conix* self, ConixOption option);
-extern void conix_add_options(Conix* self, size_t count, ConixOption* options);
-
-extern ConixHandler* conix_handler_create(void (*handle)(void*), void* payload);
+extern void cnx_cli_run(CnxCli* cli, int argc, const char** argv);
 
 #endif // CONIX_CONIX_H

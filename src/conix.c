@@ -18,157 +18,27 @@
  */
 
 #include <malloc.h>
-#include <string.h>
 
 #include "conix.h"
-#include "set.h"
-#include "map.h"
 
-#define OPTION_DELIMIT ", "
-#define DEFAULT_OPTION "--default"
-
-#define destroyer(function) ((void (*)(void*)) function)
-
-#define handler(function, payload) \
-    conix_handler_create((void (*)(void*)) function, payload)
-
-#define tokenize(target, delimit, token, body) \
-    { \
-        char* token = strtok(conix_str_copy(target), delimit); \
-        while (token) { \
-            body; \
-            token = strtok(NULL, delimit); \
-        } \
-    }
-
-typedef struct t_ConixInfo ConixInfo;
-
-struct t_Conix {
-    ConixApp app;
-    int argc;
-    const char** argv;
-    Map* options;
-    Set* info;
-    size_t max_size;
-};
-
-struct t_ConixInfo {
+struct t_CnxCli {
     const char* name;
-    const char* description;
+    const char* version;
 };
 
-static char* conix_str_copy(const char*);
-
-static ConixInfo* conix_info_create(const char*, const char*);
-static void conix_info_destroy(ConixInfo*);
-static int conix_info_cmp(ConixInfo*, ConixInfo*);
-
-static void conix_help(Conix* self);
-static void conix_version(Conix* self);
-static void conix_not_found(Conix* self);
-
-extern Conix* conix_create(ConixApp app, int argc, const char** argv) {
-    Conix* self = (Conix*) malloc(sizeof(Conix));
-    self->app = app;
-    self->argc = argc;
-    self->argv = argv;
-    self->max_size = 0;
-    self->options = map_create();
-    self->info = set_create();
-    conix_add_options(self, 2, (ConixOption[]) {
-        { "-h, --help", "Display this information", handler(conix_help, self) },
-        { "-v, --version", "Display version information", handler(conix_version, self) },
-    });
-    return self;
+extern CnxCli* cnx_cli_init(const char* name, const char* version) {
+    CnxCli* cli = (CnxCli*) malloc(sizeof(CnxCli));
+    cli->name = name;
+    cli->version = version;
+    return cli;
 }
 
-extern void conix_destroy(Conix* self) {
-    if (self) {
-        map_destroy(self->options);
-        set_destroy(self->info, destroyer(conix_info_destroy));
-        free(self);
-    }
+extern void cnx_cli_free(CnxCli* cli) {
+    if (cli) free(cli);
 }
 
-extern void conix_run(Conix* self) {
-    if (self) {
-        const char* option = self->argc > 1 ? self->argv[1] : DEFAULT_OPTION;
-        ConixHandler* handler = (ConixHandler*) map_get(self->options, option);
-        return handler != NULL
-            ? handler->handle(handler->payload)
-            : conix_not_found(self);
-    }
-}
-
-extern void conix_add_option(Conix* self, ConixOption option) {
-    if (self) {
-        size_t size = strlen(option.name);
-        if (size > self->max_size) {
-            self->max_size = size;
-        }
-
-        ConixInfo* target = conix_info_create(option.name, option.description);
-        set_put(self->info, target, (Compare) conix_info_cmp);
-        tokenize(option.name, OPTION_DELIMIT, id, {
-            map_put(self->options, id, option.handler);
-        })
-    }
-}
-
-extern void conix_add_options(Conix* self, size_t count, ConixOption* options) {
-    for (size_t index = 0; index < count; ++index) {
-        conix_add_option(self, options[index]);
-    }
-}
-
-extern ConixHandler* conix_handler_create(void (*handle)(void*), void* payload) {
-    ConixHandler* handler = (ConixHandler*) malloc(sizeof(ConixHandler));
-    handler->handle = handle;
-    handler->payload = payload;
-    return handler;
-}
-
-static char* conix_str_copy(const char* string) {
-    size_t size = strlen(string) + 1;
-    char* result = malloc(size * sizeof(char));
-    strcpy(result, string);
-    return result;
-}
-
-static ConixInfo* conix_info_create(const char* name, const char* description) {
-    ConixInfo* info = (ConixInfo*) malloc(sizeof(ConixInfo));
-    info->name = conix_str_copy(name);
-    info->description = conix_str_copy(description);
-    return info;
-}
-
-static void conix_info_destroy(ConixInfo* info) {
-    if (info) {
-        free((void*) info->name);
-        free((void*) info->description);
-        free(info);
-    }
-}
-
-static int conix_info_cmp(ConixInfo* first, ConixInfo* second) {
-    return strcmp(first->name, second->name);
-}
-
-static void conix_help(Conix* self) {
-    printf("Usage: %s [option]\nOptions:\n", self->app.name);
-    set_foreach(self->info, ConixInfo* item, {
-        printf(" %*s %s\n", -(int)(self->max_size + 3), item->name, item->description);
-    })
-}
-
-static void conix_version(Conix* self) {
-    printf("%s v%s\n", self->app.name, self->app.version);
-}
-
-static void conix_not_found(Conix* self) {
-    ConixHandler* handler = (ConixHandler*) map_get(self->options, "*");
-    if (handler) {
-        return handler->handle(handler->payload);
-    }
-    printf("%s: Invalid option!\n", self->app.name);
+extern void cnx_cli_run(CnxCli* cli, int argc, const char** argv) {
+    printf("=== %s (v%s) ===\n", cli->name, cli->version);
+    for (size_t index = 0; index < argc; ++index)
+        printf("%s\n", argv[index]);
 }
