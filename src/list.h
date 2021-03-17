@@ -27,7 +27,7 @@
 #define list_foreach(list, item, body) \
     do { \
         list.current = list.head; \
-        while (list.current != NULL && list.current->data) { \
+        while (list.current != NULL) { \
             item = list.current->data;   \
             body; \
         } \
