@@ -1,4 +1,4 @@
-/* Conix - Command line interface building library
+/* List - Simple linked list
  * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
@@ -17,22 +17,33 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_CONIX_H
-#define CONIX_CONIX_H
+#include <malloc.h>
 
-#include <stddef.h>
+#include "list.h"
 
-typedef struct t_CnxCli CnxCli;
-typedef struct t_CnxApp CnxApp;
+static void list_node_free(ListNode*, destroy_t);
 
-struct t_CnxApp {
-    const char* name;
-    const char* version;
-};
+extern void list_init(List* list, destroy_t destroy) {
+    list->current = list->head = NULL;
+    list->destroy = destroy;
+}
 
-extern CnxCli* cnx_cli_init(CnxApp app, size_t argc, const char** argv);
-extern void cnx_cli_free(CnxCli* cli);
+extern void list_free(List* list) {
+    list_node_free(list->head, list->destroy);
+    list->current = list->head = NULL;
+}
 
-extern void cnx_cli_run(CnxCli* cli);
+extern void list_push(List* list, void* data) {
+    ListNode* node = (ListNode*) malloc(sizeof(ListNode));
+    node->data = data;
+    node->next = list->head;
+    list->head = node;
+}
 
-#endif // CONIX_CONIX_H
+static void list_node_free(ListNode* node, destroy_t destroy) {
+    if (node) {
+        destroy(node->data);
+        list_node_free(node->next, destroy);
+        free(node);
+    }
+}

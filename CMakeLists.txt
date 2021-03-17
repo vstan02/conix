@@ -3,7 +3,7 @@ project(conix C)
 
 set(CMAKE_C_STANDARD 11)
 
-set(CONIX_SOURCES src/conix.c)
+set(CONIX_SOURCES src/conix.c src/list.c)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 

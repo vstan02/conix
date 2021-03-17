@@ -1,5 +1,5 @@
 /* Conix - Command line interface building library
- * Copyright (C) 2020 Stan Vlad <vstan02@protonmail.com>
+ * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
  *

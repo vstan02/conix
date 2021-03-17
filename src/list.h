@@ -1,4 +1,4 @@
-/* Conix - Command line interface building library
+/* List - Simple linked list
  * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
@@ -17,22 +17,39 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_CONIX_H
-#define CONIX_CONIX_H
+#ifndef CONIX_LIST_H
+#define CONIX_LIST_H
 
-#include <stddef.h>
+#include <stdbool.h>
 
-typedef struct t_CnxCli CnxCli;
-typedef struct t_CnxApp CnxApp;
+#include "common.h"
 
-struct t_CnxApp {
-    const char* name;
-    const char* version;
+#define list_foreach(list, item, body) \
+    do { \
+        list.current = list.head; \
+        while (list.current != NULL && list.current->data) { \
+            item = list.current->data;   \
+            body; \
+        } \
+    } while(false)
+
+typedef struct t_List List;
+typedef struct t_ListNode ListNode;
+
+struct t_ListNode {
+    void* data;
+    ListNode* next;
 };
 
-extern CnxCli* cnx_cli_init(CnxApp app, size_t argc, const char** argv);
-extern void cnx_cli_free(CnxCli* cli);
+struct t_List {
+    ListNode* head;
+    ListNode* current;
+    destroy_t destroy;
+};
 
-extern void cnx_cli_run(CnxCli* cli);
+extern void list_init(List* list, destroy_t destroy);
+extern void list_free(List* list);
 
-#endif // CONIX_CONIX_H
+extern void list_push(List* list, void* data);
+
+#endif // CONIX_LIST_H
