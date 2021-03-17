@@ -20,11 +20,19 @@
 #ifndef CONIX_CONIX_H
 #define CONIX_CONIX_H
 
-typedef struct t_CnxCli CnxCli;
+#include <stddef.h>
 
-extern CnxCli* cnx_cli_init(const char* name, const char* version);
+typedef struct t_CnxCli CnxCli;
+typedef struct t_CnxApp CnxApp;
+
+struct t_CnxApp {
+    const char* name;
+    const char* version;
+};
+
+extern CnxCli* cnx_cli_init(CnxApp app, size_t argc, const char** argv);
 extern void cnx_cli_free(CnxCli* cli);
 
-extern void cnx_cli_run(CnxCli* cli, int argc, const char** argv);
+extern void cnx_cli_run(CnxCli* cli);
 
 #endif // CONIX_CONIX_H

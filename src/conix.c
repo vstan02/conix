@@ -22,14 +22,16 @@
 #include "conix.h"
 
 struct t_CnxCli {
-    const char* name;
-    const char* version;
+    size_t argc;
+    const char** argv;
+    CnxApp app;
 };
 
-extern CnxCli* cnx_cli_init(const char* name, const char* version) {
+extern CnxCli* cnx_cli_init(CnxApp app, size_t argc, const char** argv) {
     CnxCli* cli = (CnxCli*) malloc(sizeof(CnxCli));
-    cli->name = name;
-    cli->version = version;
+    cli->app = app;
+    cli->argc = argc;
+    cli->argv = argv;
     return cli;
 }
 
@@ -37,8 +39,8 @@ extern void cnx_cli_free(CnxCli* cli) {
     if (cli) free(cli);
 }
 
-extern void cnx_cli_run(CnxCli* cli, int argc, const char** argv) {
-    printf("=== %s (v%s) ===\n", cli->name, cli->version);
-    for (size_t index = 0; index < argc; ++index)
-        printf("%s\n", argv[index]);
+extern void cnx_cli_run(CnxCli* cli) {
+    printf("=== %s (v%s) ===\n", cli->app.name, cli->app.version);
+    for (size_t index = 0; index < cli->argc; ++index)
+        printf("%s\n", cli->argv[index]);
 }
