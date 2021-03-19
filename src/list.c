@@ -24,16 +24,15 @@
 static void list_node_free(ListNode*, destroy_t);
 
 extern void list_init(List* list, destroy_t destroy) {
-    list->current = list->head = NULL;
+    list->head = NULL;
     list->destroy = destroy;
 }
 
 extern void list_free(List* list) {
     list_node_free(list->head, list->destroy);
-    list->current = list->head = NULL;
 }
 
-extern void list_push(List* list, void* data) {
+extern void list_push(List* list, value_t data) {
     ListNode* node = (ListNode*) malloc(sizeof(ListNode));
     node->data = data;
     node->next = list->head;

@@ -22,8 +22,8 @@
 #include "test.h"
 #include "list.h"
 
-static void destroy(void*);
-static void cmp_next(List*, const char*);
+static void destroy(value_t);
+static void cmp_next(ListNode**, const char*);
 
 static void test_list_main(void);
 
@@ -39,19 +39,19 @@ static void test_list_main(void) {
     list_push(&list, "234");
     list_push(&list, "345");
 
-    list.current = list.head;
-    cmp_next(&list, "345");
-    cmp_next(&list, "234");
-    cmp_next(&list, "123");
+    ListNode* node = list.head;
+    cmp_next(&node, "345");
+    cmp_next(&node, "234");
+    cmp_next(&node, "123");
 
     list_free(&list);
 }
 
-static void cmp_next(List* list, const char* value) {
-    if (list->current) {
-        g_assert_cmpstr(list->current->data, ==, value);
-        list->current = list->current->next;
+static void cmp_next(ListNode** node, const char* value) {
+    if (*node != NULL) {
+        g_assert_cmpstr((*node)->data, ==, value);
+        *node = (*node)->next;
     }
 }
 
-static void destroy(void* data) {}
+static void destroy(value_t data) {}

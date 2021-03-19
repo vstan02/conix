@@ -1,4 +1,4 @@
-/* Common - Common types
+/* Common - Common types and macros
  * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
@@ -20,6 +20,17 @@
 #ifndef CONIX_COMMON_H
 #define CONIX_COMMON_H
 
-typedef void (*destroy_t)(void*);
+#include <stddef.h>
+
+#define foreach(index, from, to) \
+    for (size_t index = from; index < to; ++index)
+
+#define iforeach(index, from, to) \
+    for (size_t index = from - 1; index >= to; --index)
+
+typedef void* value_t;
+
+typedef void (*destroy_t)(value_t);
+typedef int (*compare_t)(value_t, value_t);
 
 #endif // CONIX_COMMON_H

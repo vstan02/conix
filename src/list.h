@@ -20,36 +20,33 @@
 #ifndef CONIX_LIST_H
 #define CONIX_LIST_H
 
-#include <stdbool.h>
-
 #include "common.h"
 
 #define list_foreach(list, item, body) \
     do { \
-        list.current = list.head; \
-        while (list.current != NULL) { \
-            item = list.current->data;   \
+        ListNode* _current = list.head; \
+        while (_current != NULL) { \
+            item = _current->data; \
             body; \
         } \
-    } while(false)
+    } while(0)
 
 typedef struct t_List List;
 typedef struct t_ListNode ListNode;
 
 struct t_ListNode {
-    void* data;
+    value_t data;
     ListNode* next;
 };
 
 struct t_List {
     ListNode* head;
-    ListNode* current;
     destroy_t destroy;
 };
 
 extern void list_init(List* list, destroy_t destroy);
 extern void list_free(List* list);
 
-extern void list_push(List* list, void* data);
+extern void list_push(List* list, value_t data);
 
 #endif // CONIX_LIST_H
