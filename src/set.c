@@ -40,10 +40,9 @@ extern void set_free(Set* set) {
 extern void set_put(Set* set, value_t value) {
     foreach(i, 0, set->length) {
         int diff = set->compare(value, set->values[i]);
-        if (diff < 0) return set_push(set, i, value);
-        else if (diff > 0) continue;
-
-        set->values[i] = value;
+        if (diff > 0) continue;
+        else if (!diff) set->values[i] = value;
+        else set_push(set, i, value);
         return;
     }
     set_push(set, set->length, value);
