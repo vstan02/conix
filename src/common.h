@@ -25,9 +25,6 @@
 #define foreach(index, from, to) \
     for (size_t index = from; index < to; ++index)
 
-#define iforeach(index, from, to) \
-    for (size_t index = from - 1; index >= to; --index)
-
 typedef void* value_t;
 
 typedef void (*destroy_t)(value_t);

@@ -21,7 +21,9 @@
 #define CONIX_TEST_H
 
 #define TEST_LIST_PATH "/list"
+#define TEST_SET_PATH "/set"
 
 extern void add_list_tests(void);
+extern void add_set_tests(void);
 
 #endif // CONIX_TEST_H

@@ -50,8 +50,8 @@ extern void set_put(Set* set, value_t value) {
 
 static void set_push(Set* set, size_t index, value_t value) {
     if (set->length == set->size) resize(set);
-    iforeach(i, set->length, index)
-        set->values[i + 1] = set->values[i];
+    for (size_t i = set->length; i > index; --index)
+        set->values[i] = set->values[i - 1];
     ++set->length;
     set->values[index] = value;
 }
