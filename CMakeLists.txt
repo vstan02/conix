@@ -3,7 +3,7 @@ project(conix C)
 
 set(CMAKE_C_STANDARD 11)
 
-set(CONIX_SOURCES src/conix.c src/list.c)
+set(CONIX_SOURCES src/conix.c src/list.c src/set.h src/set.c)
 
 set(CONIX_TESTS test/list_test.c)
 
