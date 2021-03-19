@@ -24,8 +24,7 @@
 
 #define set_foreach(set, item, body) \
     do { \
-        size_t _index = 0; \
-        while (_index < set.length) { \
+        foreach(_index, 0, set.length) { \
             item = set.values[_index] \
             body; \
         } \
