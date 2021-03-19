@@ -39,11 +39,11 @@ extern void set_free(Set* set) {
 
 extern void set_put(Set* set, value_t value) {
     foreach(i, 0, set->length) {
-        int diff = set->compare(value, set->values[i]);
-        if (diff > 0) continue;
-        else if (!diff) set->values[i] = value;
-        else set_push(set, i, value);
-        return;
+        int difference = set->compare(value, set->values[i]);
+        if (difference > 0) continue;
+        return difference
+            ? set_push(set, i, value)
+            : (set->values[i] = value);
     }
     set_push(set, set->length, value);
 }
@@ -55,7 +55,6 @@ static void set_push(Set* set, size_t index, value_t value) {
     ++set->length;
     set->values[index] = value;
 }
-
 
 static void resize(Set* set) {
     set->size = set->size < 8 ? 8 : set->size * 2;
