@@ -1,4 +1,4 @@
-/* Conix - Command line interface building library
+/* Options - A collection of cli options
  * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
@@ -17,32 +17,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <malloc.h>
-
-#include "conix.h"
 #include "options.h"
 
-struct t_CnxCli {
-    size_t argc;
-    const char** argv;
-    CnxApp app;
-    Options options;
-};
-
-extern CnxCli* cnx_cli_init(CnxApp app, size_t argc, const char** argv) {
-    CnxCli* cli = (CnxCli*) malloc(sizeof(CnxCli));
-    cli->app = app;
-    cli->argc = argc;
-    cli->argv = argv;
-    return cli;
+extern void options_init(Options* options) {
+    options->max_size = 0;
+    info_init(&options->info);
 }
 
-extern void cnx_cli_free(CnxCli* cli) {
-    if (cli) free(cli);
-}
-
-extern void cnx_cli_run(CnxCli* cli) {
-    printf("=== %s (v%s) ===\n", cli->app.name, cli->app.version);
-    for (size_t index = 0; index < cli->argc; ++index)
-        printf("%s\n", cli->argv[index]);
+extern void options_free(Options* options) {
+    info_free(&options->info);
 }
