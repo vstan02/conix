@@ -3,9 +3,20 @@ project(conix C)
 
 set(CMAKE_C_STANDARD 11)
 
-set(CONIX_SOURCES src/conix.c src/list.c src/info.c src/common.c)
+set(
+    CONIX_SOURCES
+    src/conix.c
+    src/common.c
+    src/list.c
+    src/info.c
+    src/options.c
+)
 
-set(CONIX_TESTS test/list_test.c test/info_test.c)
+set(
+    CONIX_TESTS
+    test/list_test.c
+    test/info_test.c
+)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
