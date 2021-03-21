@@ -21,7 +21,7 @@
 
 #include "set.h"
 
-static void resize(Set*);
+static void set_resize(Set*);
 static void set_push(Set*, size_t, value_t);
 
 extern void set_init(Set* set, compare_t compare, destroy_t destroy) {
@@ -49,14 +49,14 @@ extern void set_put(Set* set, value_t value) {
 }
 
 static void set_push(Set* set, size_t index, value_t value) {
-    if (set->length == set->size) resize(set);
+    if (set->length == set->size) set_resize(set);
     for (size_t i = set->length; i > index; --index)
         set->values[i] = set->values[i - 1];
     ++set->length;
     set->values[index] = value;
 }
 
-static void resize(Set* set) {
+static void set_resize(Set* set) {
     set->size = set->size < 8 ? 8 : set->size * 2;
     set->values = realloc(set->values, set->size);
     if (set->values == NULL) exit(1);
