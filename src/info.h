@@ -1,4 +1,4 @@
-/* Set - Set of unique values
+/* Info - Information about cli options
  * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
@@ -17,33 +17,36 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_SET_H
-#define CONIX_SET_H
+#ifndef CONIX_INFO_H
+#define CONIX_INFO_H
 
 #include "common.h"
 
-#define set_foreach(set, item, body) \
+#define info_foreach(info, item, body) \
     do { \
-        foreach(_index, 0, set.length) { \
-            item = set.values[_index] \
+        foreach(_index, 0, (info).length) { \
+            InfoItem item = (info).values[_index]; \
             body; \
         } \
     } while(0)
 
-typedef struct t_Set Set;
+typedef struct t_Info Info;
+typedef struct t_InfoItem InfoItem;
 
-struct t_Set {
+struct t_Info {
     size_t size;
     size_t length;
-    value_t* values;
-
-    compare_t compare;
-    destroy_t destroy;
+    InfoItem* values;
 };
 
-extern void set_init(Set* set, compare_t compare, destroy_t destroy);
-extern void set_free(Set* set);
+struct t_InfoItem {
+    const char* name;
+    const char* description;
+};
 
-extern void set_put(Set* set, value_t data);
+extern void info_init(Info* info);
+extern void info_free(Info* info);
 
-#endif // CONIX_SET_H
+extern void info_put(Info* info, InfoItem item);
+
+#endif // CONIX_INFO_H

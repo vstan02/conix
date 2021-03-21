@@ -1,4 +1,4 @@
-/* Set test - Tests for set
+/* Common - Common utility functions
  * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
@@ -17,41 +17,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <glib.h>
 #include <string.h>
+#include <malloc.h>
 
-#include "test.h"
-#include "set.h"
+#include "common.h"
 
-static void destroy(value_t);
-static void cmp_next(Set*, const char*);
-
-static void test_set_main(void);
-
-extern void add_set_tests(void) {
-    g_test_add_func(TEST_SET_PATH, test_set_main);
+extern char* str_copy(const char* string) {
+    size_t size = strlen(string) + 1;
+    char* result = malloc(sizeof(char) * size);
+    strcpy(result, string);
+    return result;
 }
-
-static void test_set_main(void) {
-    Set set;
-    set_init(&set, (compare_t)strcmp, destroy);
-
-    set_put(&set, "123");
-    set_put(&set, "234");
-    set_put(&set, "345");
-
-    cmp_next(&set, "123");
-    cmp_next(&set, "234");
-    cmp_next(&set, "345");
-
-    set_free(&set);
-}
-
-static void cmp_next(Set* set, const char* value) {
-    static size_t i = 0;
-    if (i < set->length) {
-        g_assert_cmpstr(set->values[i++], ==, value);
-    }
-}
-
-static void destroy(value_t data) {}

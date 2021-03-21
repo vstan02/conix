@@ -1,4 +1,4 @@
-/* Common - Common types and macros
+/* Common - Common types and macros and utility functions
  * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
@@ -28,6 +28,7 @@
 typedef void* value_t;
 
 typedef void (*destroy_t)(value_t);
-typedef int (*compare_t)(value_t, value_t);
+
+extern char* str_copy(const char* string);
 
 #endif // CONIX_COMMON_H

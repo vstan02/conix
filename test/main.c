@@ -24,6 +24,6 @@
 int main(int argc, char** argv) {
     g_test_init(&argc, &argv, NULL);
     add_list_tests();
-    add_set_tests();
+    add_info_tests();
     return g_test_run();
 }
