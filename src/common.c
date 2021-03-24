@@ -24,7 +24,7 @@
 
 extern char* str_copy(const char* string) {
     size_t size = strlen(string) + 1;
-    char* result = malloc(sizeof(char) * size);
+    char* result = (char*) malloc(sizeof(char) * size);
     strcpy(result, string);
     return result;
 }

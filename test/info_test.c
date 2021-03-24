@@ -22,8 +22,6 @@
 #include "test.h"
 #include "info.h"
 
-static void cmp_next(Info*, InfoItem);
-
 static void test_info_main(void);
 
 extern void add_info_tests(void) {
@@ -33,29 +31,23 @@ extern void add_info_tests(void) {
 static void test_info_main(void) {
     Info info;
     InfoItem items[] = {
-        { "first", "First item" },
-        { "second", "Second item" },
-        { "third", "Third item" }
+        { "3", "Third item" },
+        { "2", "Second item" },
+        { "1", "First item" }
     };
 
     info_init(&info);
 
-    info_put(&info, items[0]);
-    info_put(&info, items[1]);
-    info_put(&info, items[2]);
+    foreach(i, 0, 3) {
+        info_put(&info, items[i]);
+    }
 
-    cmp_next(&info, items[0]);
-    cmp_next(&info, items[1]);
-    cmp_next(&info, items[2]);
+    size_t index = info.length;
+    info_foreach(info, item, {
+        --index;
+        g_assert_cmpstr(item.name, ==, items[index].name);
+        g_assert_cmpstr(item.description, ==, items[index].description);
+    });
 
     info_free(&info);
-}
-
-static void cmp_next(Info* info, InfoItem item) {
-    static size_t i = 0;
-    if (i < info->length) {
-        InfoItem current = info->values[i++];
-        g_assert_cmpstr(current.name, ==, item.name);
-        g_assert_cmpstr(current.description, ==, item.description);
-    }
 }
