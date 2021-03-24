@@ -24,6 +24,7 @@
 
 #include "info.h"
 
+typedef struct t_Option Option;
 typedef struct t_Options Options;
 
 struct t_Options {
@@ -31,7 +32,16 @@ struct t_Options {
     size_t max_size;
 };
 
+struct t_Option {
+    const char* name;
+    const char* description;
+};
+
 extern void options_init(Options* options);
 extern void options_free(Options* options);
+
+extern void options_print(Options* options);
+
+extern void options_add(Options* options, Option option);
 
 #endif // CONIX_OPTIONS_H

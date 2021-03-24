@@ -17,6 +17,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <stdio.h>
+#include <string.h>
+
 #include "options.h"
 
 extern void options_init(Options* options) {
@@ -26,4 +29,24 @@ extern void options_init(Options* options) {
 
 extern void options_free(Options* options) {
     info_free(&options->info);
+}
+
+extern void options_add(Options* options, Option option) {
+    size_t size = strlen(option.name);
+    if (size > options->max_size) {
+        options->max_size = size;
+    }
+
+    info_put(&options->info, (InfoItem) {
+        .name = option.name,
+        .description = option.description
+    });
+}
+
+extern void options_print(Options* options) {
+    int size = (int)options->max_size;
+    printf("Options:\n");
+    info_foreach(options->info, info, {
+        printf("   %.*s %s\n", size, info.name, info.description);
+    });
 }

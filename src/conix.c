@@ -34,15 +34,28 @@ extern CnxCli* cnx_cli_init(CnxApp app, size_t argc, const char** argv) {
     cli->app = app;
     cli->argc = argc;
     cli->argv = argv;
+    options_init(&cli->options);
     return cli;
 }
 
 extern void cnx_cli_free(CnxCli* cli) {
-    if (cli) free(cli);
+    if (cli) {
+        options_free(&cli->options);
+        free(cli);
+    }
 }
 
 extern void cnx_cli_run(CnxCli* cli) {
-    printf("=== %s (v%s) ===\n", cli->app.name, cli->app.version);
-    for (size_t index = 0; index < cli->argc; ++index)
-        printf("%s\n", cli->argv[index]);
+    options_add(&cli->options, (Option) {
+        .name = "-h, --help", .description = "Display this information"
+    });
+    options_add(&cli->options, (Option) {
+        .name = "-v, --version", .description = "Display version information"
+    });
+    options_add(&cli->options, (Option) {
+        .name = "-a, --about", .description = "Display other information"
+    });
+
+    printf("Usage: %s [options]\n\n", cli->app.name, cli->app.version);
+    options_print(&cli->options);
 }
