@@ -44,9 +44,9 @@ extern void options_add(Options* options, Option option) {
 }
 
 extern void options_print(Options* options) {
-    int size = (int)options->max_size;
+    int size = -(int)(options->max_size + 3);
     printf("Options:\n");
     info_foreach(options->info, info, {
-        printf("   %.*s %s\n", size, info.name, info.description);
+        printf("\t%*s %s\n", size, info.name, info.description);
     });
 }

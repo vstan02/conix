@@ -56,6 +56,6 @@ extern void cnx_cli_run(CnxCli* cli) {
         .name = "-a, --about", .description = "Display other information"
     });
 
-    printf("Usage: %s [options]\n\n", cli->app.name, cli->app.version);
+    printf("Usage: %s [options]\n\n", cli->app.name);
     options_print(&cli->options);
 }
