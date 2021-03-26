@@ -24,8 +24,11 @@
 
 #define BASE_SIZE 4
 
-#define info_last(info) \
-    info->values[info->length - 1]
+#define last_name(info) \
+    info->values[info->length - 1].name
+
+#define reallocate(type, array, size) \
+    (type*) realloc(array, size * sizeof(type))
 
 static void info_push(Info*, size_t, InfoItem);
 
@@ -44,7 +47,7 @@ extern void info_free(Info* info) {
 }
 
 extern void info_put(Info* info, InfoItem value) {
-    if (info->values == NULL || strcmp(value.name, info_last(info).name) > 0) {
+    if (info->values == NULL || strcmp(value.name, last_name(info)) > 0) {
         return info_push(info, info->length, value);
     }
 
@@ -62,7 +65,7 @@ extern void info_put(Info* info, InfoItem value) {
 static void info_push(Info* info, size_t index, InfoItem value) {
     if (info->length == info->size) {
         info->size = info->size ? info->size * 2 : BASE_SIZE;
-        info->values = (InfoItem*) realloc(info->values, info->size * sizeof(InfoItem));
+        info->values = reallocate(InfoItem, info->values, info->size);
         if (info->values == NULL) exit(EXIT_FAILURE);
     }
 
