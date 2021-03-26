@@ -67,8 +67,7 @@ static void info_push(Info* info, size_t index, InfoItem value) {
     }
 
     for (size_t i = info->length; i > index; --i) {
-        info->values[i].name = info->values[i - 1].name;
-        info->values[i].description = info->values[i - 1].description;
+        info->values[i] = info->values[i - 1];
     }
 
     ++info->length;
