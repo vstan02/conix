@@ -1,4 +1,4 @@
-/* Common - Common types and macros and utility functions
+/* Common - Common types, macros and functions
  * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
@@ -24,6 +24,15 @@
 
 #define foreach(index, from, to) \
     for (size_t index = from; index < to; ++index)
+
+#define tokenize(string, delimit, token, body) \
+    do { \
+        char* token = strtok(str_copy(string), delimit); \
+        while (token != NULL) { \
+            body; \
+            token = strtok(NULL, delimit); \
+        } \
+    } while (0)
 
 typedef void* value_t;
 

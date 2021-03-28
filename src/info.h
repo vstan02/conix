@@ -28,7 +28,7 @@
             InfoItem item = (info).values[_index]; \
             body; \
         } \
-    } while(0)
+    } while (0)
 
 typedef struct t_Info Info;
 typedef struct t_InfoItem InfoItem;

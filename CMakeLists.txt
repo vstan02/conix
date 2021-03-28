@@ -7,8 +7,7 @@ set(
     CONIX_SOURCES
     src/conix.c
     src/common.c
-    src/list.c
-    src/info.c
+        src/info.c
     src/options.c
 )
 

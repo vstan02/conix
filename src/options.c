@@ -19,16 +19,26 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <malloc.h>
 
 #include "options.h"
+
+static void handlers_free(Handlers*);
+static size_t hash(const char*);
 
 extern void options_init(Options* options) {
     options->max_size = 0;
     info_init(&options->info);
+    foreach(i, 0, HANDLER_STORE_SIZE) {
+        options->store[i] = NULL;
+    }
 }
 
 extern void options_free(Options* options) {
     info_free(&options->info);
+    foreach(i, 0, HANDLER_STORE_SIZE) {
+        handlers_free(options->store[i]);
+    }
 }
 
 extern void options_add(Options* options, Option option) {
@@ -41,6 +51,17 @@ extern void options_add(Options* options, Option option) {
         .name = option.name,
         .description = option.description
     });
+
+    tokenize(option.name, ", ", token, {
+        Handlers* node = (Handlers*) malloc(sizeof(Handlers));
+        node->id = token;
+        node->handle = option.handle;
+        node->payload = option.payload;
+
+        size_t index = hash(token);
+        node->next = options->store[index];
+        options->store[index] = node;
+    });
 }
 
 extern void options_print(Options* options) {
@@ -49,4 +70,17 @@ extern void options_print(Options* options) {
     info_foreach(options->info, info, {
         printf("\t%*s %s\n", size, info.name, info.description);
     });
+}
+
+static void handlers_free(Handlers* handlers) {
+    if (handlers != NULL) {
+        handlers_free(handlers->next);
+        free(handlers);
+    }
+}
+
+static size_t hash(const char* string) {
+    size_t result = 0;
+    while (*string) result += *(string++);
+    return result % HANDLER_STORE_SIZE;
 }
