@@ -7,13 +7,12 @@ set(
     CONIX_SOURCES
     src/conix.c
     src/common.c
-        src/info.c
+    src/info.c
     src/options.c
 )
 
 set(
     CONIX_TESTS
-    test/list_test.c
     test/info_test.c
 )
 

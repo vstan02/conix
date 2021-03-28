@@ -20,10 +20,8 @@
 #ifndef CONIX_TEST_H
 #define CONIX_TEST_H
 
-#define TEST_LIST_PATH "/list"
 #define TEST_INFO_PATH "/info"
 
-extern void add_list_tests(void);
 extern void add_info_tests(void);
 
 #endif // CONIX_TEST_H
