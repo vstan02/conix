@@ -29,7 +29,7 @@ Once `cmake` is done generating makefiles, we can build the library by running `
 make
 ```
 
-### Running the demo
+### Running demo
 ```
 ./demo
 ```
