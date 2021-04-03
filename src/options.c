@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "config.h"
 #include "options.h"
 
 #define NOT_FOUND "*"
@@ -73,6 +74,6 @@ extern void options_print(Options* options) {
     int size = -(int)(options->max_size + 1);
     printf("Options:\n");
     info_foreach(options->info, info, {
-        printf("   %*s %s\n", size, info.name, info.description);
+        printf(CNX_INFO_FMT, size, info.name, info.description);
     });
 }
