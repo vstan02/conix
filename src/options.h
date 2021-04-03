@@ -20,21 +20,16 @@
 #ifndef CONIX_OPTIONS_H
 #define CONIX_OPTIONS_H
 
-#include <stddef.h>
-
 #include "info.h"
+#include "handlers.h"
 
-#define HANDLER_STORE_SIZE 10
-
-typedef void (*handle_t)(void*);
 typedef struct t_Option Option;
 typedef struct t_Options Options;
-typedef struct t_Handlers Handlers;
 
 struct t_Options {
     Info info;
+    Handlers handlers;
     size_t max_size;
-    Handlers* store[HANDLER_STORE_SIZE];
 };
 
 struct t_Option {
@@ -42,13 +37,6 @@ struct t_Option {
     const char* description;
     handle_t handle;
     void* payload;
-};
-
-struct t_Handlers {
-    const char* id;
-    void* payload;
-    handle_t handle;
-    Handlers* next;
 };
 
 extern void options_init(Options* options);

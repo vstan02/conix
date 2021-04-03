@@ -1,4 +1,4 @@
-/* Common - Common types, macros and functions
+/* Handlers - A collection of cli handlers
  * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
@@ -17,25 +17,30 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_COMMON_H
-#define CONIX_COMMON_H
+#ifndef CONIX_HANDLERS_H
+#define CONIX_HANDLERS_H
 
-#include <stddef.h>
+#include "common.h"
 
-#define foreach(index, from, to) \
-    for (size_t index = from; index < to; ++index)
+#define HANDLER_STORES 10
 
-#define tokenize(string, delimit, token, body) \
-    do { \
-        char* token = strtok(str_copy(string), delimit); \
-        while (token != NULL) { \
-            body; \
-            token = strtok(NULL, delimit); \
-        } \
-    } while (0)
+typedef struct t_Handler Handler;
+typedef struct t_Handlers Handlers;
+typedef struct t_HandlerStore HandlerStore;
 
-typedef void (*handle_t)(void*);
+struct t_Handler {
+    const char* id;
+    void* payload;
+    handle_t handle;
+};
 
-extern char* str_copy(const char* string);
+struct t_Handlers {
+    HandlerStore* stores[HANDLER_STORES];
+};
 
-#endif // CONIX_COMMON_H
+extern void handlers_init(Handlers* handlers);
+extern void handlers_free(Handlers* handlers);
+
+extern void handlers_put(Handlers* handlers, Handler handler);
+
+#endif // CONIX_HANDLERS_H
