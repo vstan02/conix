@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.16)
 project(CONIX C)
 
 set(CMAKE_C_STANDARD 11)
@@ -23,7 +23,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 add_library(conix ${CONIX_SOURCES})
 
-find_package(PkgConfig REQUIRED)
+find_package(PkgConfig)
 pkg_check_modules(GLIB REQUIRED glib-2.0)
 
 include_directories(${GLIB_INCLUDE_DIRS})
