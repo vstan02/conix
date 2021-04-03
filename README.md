@@ -29,6 +29,23 @@ Once `cmake` is done generating makefiles, we can build the library by running `
 make
 ```
 
+### Running the demo
+```
+./demo
+```
+
+### Running tests
+```
+./test
+```
+
+### Installing
+To install the library run:
+```
+sudo make install
+```
+By default the libraries and headers will be installed in `/usr/local/lib/` and `/usr/local/include` directories.
+
 ## License
 Conix is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 For more details, see [LICENSE](https://github.com/vstan02/conix/blob/master/LICENSE) file.
