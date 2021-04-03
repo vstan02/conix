@@ -70,9 +70,9 @@ extern void options_run(Options* options, const char* option) {
 }
 
 extern void options_print(Options* options) {
-    int size = -(int)(options->max_size + 3);
+    int size = -(int)(options->max_size + 1);
     printf("Options:\n");
     info_foreach(options->info, info, {
-        printf("\t%*s %s\n", size, info.name, info.description);
+        printf("   %*s %s\n", size, info.name, info.description);
     });
 }

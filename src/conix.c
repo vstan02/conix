@@ -74,5 +74,5 @@ static void help(CnxCli* cli) {
 }
 
 static void version(CnxCli* cli) {
-    printf("%s: v%s\n", cli->app.name, cli->app.version);
+    printf("%s v%s\n", cli->app.name, cli->app.version);
 }
