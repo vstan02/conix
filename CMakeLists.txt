@@ -15,6 +15,7 @@ set(
 set(
     CONIX_TESTS
     test/info_test.c
+    test/handlers_test.c
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)

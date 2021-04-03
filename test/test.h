@@ -21,7 +21,9 @@
 #define CONIX_TEST_H
 
 #define TEST_INFO_PATH "/info"
+#define TEST_HANDLERS_PATH "/handlers"
 
 extern void add_info_tests(void);
+extern void add_handlers_tests(void);
 
 #endif // CONIX_TEST_H
