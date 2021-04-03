@@ -42,5 +42,6 @@ extern void handlers_init(Handlers* handlers);
 extern void handlers_free(Handlers* handlers);
 
 extern void handlers_put(Handlers* handlers, Handler handler);
+extern Handler* handlers_get(Handlers* handlers, const char* id);
 
 #endif // CONIX_HANDLERS_H

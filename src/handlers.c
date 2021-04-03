@@ -18,6 +18,7 @@
  */
 
 #include <malloc.h>
+#include <string.h>
 
 #include "handlers.h"
 
@@ -52,6 +53,17 @@ extern void handlers_put(Handlers* handlers, Handler handler) {
     size_t index = hash(handler.id);
     store->next = handlers->stores[index];
     handlers->stores[index] = store;
+}
+
+extern Handler* handlers_get(Handlers* handlers, const char* id) {
+    HandlerStore* store = handlers->stores[hash(id)];
+    while (store != NULL) {
+        if (!strcmp(store->data.id, id)) {
+            return &store->data;
+        }
+        store = store->next;
+    }
+    return NULL;
 }
 
 static size_t hash(const char* string) {
