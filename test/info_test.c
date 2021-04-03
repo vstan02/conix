@@ -1,4 +1,4 @@
-/* Info - Information about cli options
+/* Info test - Tests for information about cli options
  * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
