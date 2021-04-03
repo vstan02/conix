@@ -36,3 +36,6 @@ target_link_libraries(demo conix)
 
 add_executable(test test/main.c ${CONIX_TESTS})
 target_link_libraries(test conix ${GLIB_LIBRARIES})
+
+install(FILES include/conix.h DESTINATION include)
+install(TARGETS conix ARCHIVE DESTINATION lib)
