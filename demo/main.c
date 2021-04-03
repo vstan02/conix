@@ -6,6 +6,10 @@
 
 CnxApp app = { NAME, VERSION };
 
+void def_option(void* data) {
+    printf("Welcome to %s!\n", (char*)data);
+}
+
 void not_found(void* data) {
     printf("Invalid option!");
 }
@@ -13,7 +17,8 @@ void not_found(void* data) {
 int main(int argc, const char** argv) {
     CnxCli* cli = cnx_cli_init(app);
 
-    cnx_cli_add(cli, 1, (CnxOption[]) {
+    cnx_cli_add(cli, 2, (CnxOption[]) {
+        { "--default", "Default option", def_option, (void*)NAME },
         { "*", NULL, not_found, NULL }
     });
 
