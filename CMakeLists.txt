@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(conix C)
+project(CONIX C)
 
 set(CMAKE_C_STANDARD 11)
 
@@ -23,13 +23,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 add_library(conix ${CONIX_SOURCES})
 
-add_executable(demo demo/main.c)
-target_link_libraries(demo conix)
-
-add_executable(test test/main.c ${CONIX_TESTS})
-target_link_libraries(test conix)
-
-# GTK3
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GLIB REQUIRED glib-2.0)
 
@@ -38,4 +31,8 @@ link_directories(${GLIB_LIBRARY_DIRS})
 
 add_definitions(${GLIB_CFLAGS_OTHER})
 
-target_link_libraries(test ${GLIB_LIBRARIES})
+add_executable(demo demo/main.c)
+target_link_libraries(demo conix)
+
+add_executable(test test/main.c ${CONIX_TESTS})
+target_link_libraries(test conix ${GLIB_LIBRARIES})
