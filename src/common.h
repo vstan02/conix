@@ -1,5 +1,5 @@
-/* Test - Tests for Conix library
- * Copyright (C) 2020-2021 Stan Vlad <vstan02@protonmail.com>
+/* Common - Common types, macros and functions
+ * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
  *
@@ -17,13 +17,25 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_TEST_H
-#define CONIX_TEST_H
+#ifndef CONIX_COMMON_H
+#define CONIX_COMMON_H
 
-#define TEST_INFO_PATH "/info"
-#define TEST_HANDLERS_PATH "/handlers"
+#include <stddef.h>
 
-extern void add_info_tests(void);
-extern void add_handlers_tests(void);
+#define foreach(index, from, to) \
+    for (size_t index = from; index < to; ++index)
 
-#endif // CONIX_TEST_H
+#define tokenize(string, delimit, token, body) \
+    do { \
+        char* token = strtok(str_copy(string), delimit); \
+        while (token != NULL) { \
+            body; \
+            token = strtok(NULL, delimit); \
+        } \
+    } while (0)
+
+typedef void (*handle_t)(void*);
+
+extern char* str_copy(const char* string);
+
+#endif // CONIX_COMMON_H

@@ -1,4 +1,4 @@
-/* Conix - Command line interface building library
+/* Options - A collection of cli options
  * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
@@ -17,32 +17,34 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_CONIX_H
-#define CONIX_CONIX_H
+#ifndef CONIX_OPTIONS_H
+#define CONIX_OPTIONS_H
 
-#include <stddef.h>
+#include "info.h"
+#include "handlers.h"
 
-typedef struct t_CnxCli CnxCli;
-typedef struct t_CnxApp CnxApp;
-typedef struct t_CnxOption CnxOption;
+typedef struct t_Option Option;
+typedef struct t_Options Options;
 
-struct t_CnxApp {
-    const char* name;
-    const char* version;
+struct t_Options {
+    Info info;
+    Handlers handlers;
+    size_t max_size;
 };
 
-struct t_CnxOption {
+struct t_Option {
     const char* name;
     const char* description;
-    void (*handle)(void*);
+    handle_t handle;
     void* payload;
 };
 
-extern CnxCli* cnx_cli_init(CnxApp app);
-extern void cnx_cli_free(CnxCli* cli);
+extern void options_init(Options* options);
+extern void options_free(Options* options);
 
-extern void cnx_cli_run(CnxCli* cli, size_t argc, const char** argv);
+extern void options_print(Options* options);
 
-extern void cnx_cli_add(CnxCli* cli, size_t count, CnxOption* options);
+extern void options_add(Options* options, Option option);
+extern void options_run(Options* options, const char* option);
 
-#endif // CONIX_CONIX_H
+#endif // CONIX_OPTIONS_H

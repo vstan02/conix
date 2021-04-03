@@ -1,4 +1,4 @@
-/* Conix - Command line interface building library
+/* Info test - Tests for information about cli options
  * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
@@ -17,32 +17,37 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_CONIX_H
-#define CONIX_CONIX_H
+#include <glib.h>
 
-#include <stddef.h>
+#include "test.h"
+#include "info.h"
 
-typedef struct t_CnxCli CnxCli;
-typedef struct t_CnxApp CnxApp;
-typedef struct t_CnxOption CnxOption;
+static void test_info_main(void);
 
-struct t_CnxApp {
-    const char* name;
-    const char* version;
-};
+extern void add_info_tests(void) {
+    g_test_add_func(TEST_INFO_PATH, test_info_main);
+}
 
-struct t_CnxOption {
-    const char* name;
-    const char* description;
-    void (*handle)(void*);
-    void* payload;
-};
+static void test_info_main(void) {
+    Info info;
+    InfoItem items[] = {
+        { "3", "Third item" },
+        { "2", "Second item" },
+        { "1", "First item" }
+    };
 
-extern CnxCli* cnx_cli_init(CnxApp app);
-extern void cnx_cli_free(CnxCli* cli);
+    info_init(&info);
 
-extern void cnx_cli_run(CnxCli* cli, size_t argc, const char** argv);
+    foreach(i, 0, 3) {
+        info_put(&info, items[i]);
+    }
 
-extern void cnx_cli_add(CnxCli* cli, size_t count, CnxOption* options);
+    size_t index = info.length;
+    info_foreach(info, item, {
+        --index;
+        g_assert_cmpstr(item.name, ==, items[index].name);
+        g_assert_cmpstr(item.description, ==, items[index].description);
+    });
 
-#endif // CONIX_CONIX_H
+    info_free(&info);
+}

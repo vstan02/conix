@@ -1,9 +1,9 @@
 /* Test - Tests for Conix library
- * Copyright (C) 2020 Stan Vlad <vstan02@protonmail.com>
+ * Copyright (C) 2020-2021 Stan Vlad <vstan02@protonmail.com>
  *
- * This file is part of xCalc.
+ * This file is part of Conix.
  *
- * xCalc is free software: you can redistribute it and/or modify
+ * Conix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -22,8 +22,8 @@
 #include "test.h"
 
 int main(int argc, char** argv) {
-    g_test_init(&argc, &argv);
-    test_list();
-    test_map();
+    g_test_init(&argc, &argv, NULL);
+    add_info_tests();
+    add_handlers_tests();
     return g_test_run();
 }

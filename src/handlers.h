@@ -1,4 +1,4 @@
-/* Conix - Command line interface building library
+/* Handlers - A collection of cli handlers
  * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
@@ -17,32 +17,31 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_CONIX_H
-#define CONIX_CONIX_H
+#ifndef CONIX_HANDLERS_H
+#define CONIX_HANDLERS_H
 
-#include <stddef.h>
+#include "common.h"
 
-typedef struct t_CnxCli CnxCli;
-typedef struct t_CnxApp CnxApp;
-typedef struct t_CnxOption CnxOption;
+#define HANDLER_STORES 10
 
-struct t_CnxApp {
-    const char* name;
-    const char* version;
-};
+typedef struct t_Handler Handler;
+typedef struct t_Handlers Handlers;
+typedef struct t_HandlerStore HandlerStore;
 
-struct t_CnxOption {
-    const char* name;
-    const char* description;
-    void (*handle)(void*);
+struct t_Handler {
+    const char* id;
     void* payload;
+    handle_t handle;
 };
 
-extern CnxCli* cnx_cli_init(CnxApp app);
-extern void cnx_cli_free(CnxCli* cli);
+struct t_Handlers {
+    HandlerStore* stores[HANDLER_STORES];
+};
 
-extern void cnx_cli_run(CnxCli* cli, size_t argc, const char** argv);
+extern void handlers_init(Handlers* handlers);
+extern void handlers_free(Handlers* handlers);
 
-extern void cnx_cli_add(CnxCli* cli, size_t count, CnxOption* options);
+extern void handlers_put(Handlers* handlers, Handler handler);
+extern Handler* handlers_get(Handlers* handlers, const char* id);
 
-#endif // CONIX_CONIX_H
+#endif // CONIX_HANDLERS_H

@@ -1,5 +1,5 @@
 /* Conix - Command line interface building library
- * Copyright (C) 2020 Stan Vlad <vstan02@protonmail.com>
+ * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
  *
@@ -18,157 +18,61 @@
  */
 
 #include <malloc.h>
-#include <string.h>
 
 #include "conix.h"
-#include "set.h"
-#include "map.h"
+#include "options.h"
 
-#define OPTION_DELIMIT ", "
 #define DEFAULT_OPTION "--default"
 
-#define destroyer(function) ((void (*)(void*)) function)
-
-#define handler(function, payload) \
-    conix_handler_create((void (*)(void*)) function, payload)
-
-#define tokenize(target, delimit, token, body) \
-    { \
-        char* token = strtok(conix_str_copy(target), delimit); \
-        while (token) { \
-            body; \
-            token = strtok(NULL, delimit); \
-        } \
-    }
-
-typedef struct t_ConixInfo ConixInfo;
-
-struct t_Conix {
-    ConixApp app;
-    int argc;
-    const char** argv;
-    Map* options;
-    Set* info;
-    size_t max_size;
+struct t_CnxCli {
+    CnxApp app;
+    Options options;
 };
 
-struct t_ConixInfo {
-    const char* name;
-    const char* description;
-};
+static void help(CnxCli*);
+static void version(CnxCli*);
 
-static char* conix_str_copy(const char*);
+extern CnxCli* cnx_cli_init(CnxApp app) {
+    CnxCli* cli = (CnxCli*) malloc(sizeof(CnxCli));
+    cli->app = app;
+    options_init(&cli->options);
 
-static ConixInfo* conix_info_create(const char*, const char*);
-static void conix_info_destroy(ConixInfo*);
-static int conix_info_cmp(ConixInfo*, ConixInfo*);
-
-static void conix_help(Conix* self);
-static void conix_version(Conix* self);
-static void conix_not_found(Conix* self);
-
-extern Conix* conix_create(ConixApp app, int argc, const char** argv) {
-    Conix* self = (Conix*) malloc(sizeof(Conix));
-    self->app = app;
-    self->argc = argc;
-    self->argv = argv;
-    self->max_size = 0;
-    self->options = map_create();
-    self->info = set_create();
-    conix_add_options(self, 2, (ConixOption[]) {
-        { "-h, --help", "Display this information", handler(conix_help, self) },
-        { "-v, --version", "Display version information", handler(conix_version, self) },
+    cnx_cli_add(cli, 3, (CnxOption[]) {
+        { "-h, --help", "Display this information", (handle_t)help, cli },
+        { "-v, --version", "Display version information", (handle_t)version, cli },
+        { "*", NULL, (handle_t)help, cli }
     });
-    return self;
+
+    return cli;
 }
 
-extern void conix_destroy(Conix* self) {
-    if (self) {
-        map_destroy(self->options);
-        set_destroy(self->info, destroyer(conix_info_destroy));
-        free(self);
+extern void cnx_cli_free(CnxCli* cli) {
+    if (cli) {
+        options_free(&cli->options);
+        free(cli);
     }
 }
 
-extern void conix_run(Conix* self) {
-    if (self) {
-        const char* option = self->argc > 1 ? self->argv[1] : DEFAULT_OPTION;
-        ConixHandler* handler = (ConixHandler*) map_get(self->options, option);
-        return handler != NULL
-            ? handler->handle(handler->payload)
-            : conix_not_found(self);
+extern void cnx_cli_run(CnxCli* cli, size_t argc, const char** argv) {
+    options_run(&cli->options, argc > 1 ? argv[1] : DEFAULT_OPTION);
+}
+
+extern void cnx_cli_add(CnxCli* cli, size_t count, CnxOption* options) {
+    foreach(i, 0, count) {
+        options_add(&cli->options, (Option) {
+            .name = options[i].name,
+            .description = options[i].description,
+            .payload = options[i].payload,
+            .handle = options[i].handle
+        });
     }
 }
 
-extern void conix_add_option(Conix* self, ConixOption option) {
-    if (self) {
-        size_t size = strlen(option.name);
-        if (size > self->max_size) {
-            self->max_size = size;
-        }
-
-        ConixInfo* target = conix_info_create(option.name, option.description);
-        set_put(self->info, target, (Compare) conix_info_cmp);
-        tokenize(option.name, OPTION_DELIMIT, id, {
-            map_put(self->options, id, option.handler);
-        })
-    }
+static void help(CnxCli* cli) {
+    printf("Usage: %s [options]\n\n", cli->app.name);
+    options_print(&cli->options);
 }
 
-extern void conix_add_options(Conix* self, size_t count, ConixOption* options) {
-    for (size_t index = 0; index < count; ++index) {
-        conix_add_option(self, options[index]);
-    }
-}
-
-extern ConixHandler* conix_handler_create(void (*handle)(void*), void* payload) {
-    ConixHandler* handler = (ConixHandler*) malloc(sizeof(ConixHandler));
-    handler->handle = handle;
-    handler->payload = payload;
-    return handler;
-}
-
-static char* conix_str_copy(const char* string) {
-    size_t size = strlen(string) + 1;
-    char* result = malloc(size * sizeof(char));
-    strcpy(result, string);
-    return result;
-}
-
-static ConixInfo* conix_info_create(const char* name, const char* description) {
-    ConixInfo* info = (ConixInfo*) malloc(sizeof(ConixInfo));
-    info->name = conix_str_copy(name);
-    info->description = conix_str_copy(description);
-    return info;
-}
-
-static void conix_info_destroy(ConixInfo* info) {
-    if (info) {
-        free((void*) info->name);
-        free((void*) info->description);
-        free(info);
-    }
-}
-
-static int conix_info_cmp(ConixInfo* first, ConixInfo* second) {
-    return strcmp(first->name, second->name);
-}
-
-static void conix_help(Conix* self) {
-    printf("Usage: %s [option]\nOptions:\n", self->app.name);
-    set_foreach(self->info, ConixInfo* item, {
-        printf(" %*s %s\n", -(int)(self->max_size + 3), item->name, item->description);
-    })
-}
-
-static void conix_version(Conix* self) {
-    printf("%s v%s\n", self->app.name, self->app.version);
-}
-
-static void conix_not_found(Conix* self) {
-    ConixHandler* handler = (ConixHandler*) map_get(self->options, "*");
-    if (handler) {
-        return handler->handle(handler->payload);
-    }
-    printf("%s: Invalid option!\n", self->app.name);
+static void version(CnxCli* cli) {
+    printf("%s: v%s\n", cli->app.name, cli->app.version);
 }

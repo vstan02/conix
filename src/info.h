@@ -1,4 +1,4 @@
-/* Conix - Command line interface building library
+/* Info - Information about cli options
  * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
@@ -17,32 +17,36 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_CONIX_H
-#define CONIX_CONIX_H
+#ifndef CONIX_INFO_H
+#define CONIX_INFO_H
 
-#include <stddef.h>
+#include "common.h"
 
-typedef struct t_CnxCli CnxCli;
-typedef struct t_CnxApp CnxApp;
-typedef struct t_CnxOption CnxOption;
+#define info_foreach(info, item, body) \
+    do { \
+        foreach(_index, 0, (info).length) { \
+            InfoItem item = (info).values[_index]; \
+            body; \
+        } \
+    } while (0)
 
-struct t_CnxApp {
-    const char* name;
-    const char* version;
+typedef struct t_Info Info;
+typedef struct t_InfoItem InfoItem;
+
+struct t_Info {
+    size_t size;
+    size_t length;
+    InfoItem* values;
 };
 
-struct t_CnxOption {
+struct t_InfoItem {
     const char* name;
     const char* description;
-    void (*handle)(void*);
-    void* payload;
 };
 
-extern CnxCli* cnx_cli_init(CnxApp app);
-extern void cnx_cli_free(CnxCli* cli);
+extern void info_init(Info* info);
+extern void info_free(Info* info);
 
-extern void cnx_cli_run(CnxCli* cli, size_t argc, const char** argv);
+extern void info_put(Info* info, InfoItem item);
 
-extern void cnx_cli_add(CnxCli* cli, size_t count, CnxOption* options);
-
-#endif // CONIX_CONIX_H
+#endif // CONIX_INFO_H

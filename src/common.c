@@ -1,9 +1,9 @@
-/* Bool - Boolean data type
- * Copyright (C) 2020 Stan Vlad <vstan02@protonmail.com>
+/* Common - Common utility functions
+ * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
- * This file is part of xCalc.
+ * This file is part of Conix.
  *
- * xCalc is free software: you can redistribute it and/or modify
+ * Conix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -17,9 +17,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONIX_BOOL_H
-#define CONIX_BOOL_H
+#include <string.h>
+#include <malloc.h>
 
-typedef enum { false, true } bool;
+#include "common.h"
 
-#endif // CONIX_BOOL_H
+extern char* str_copy(const char* string) {
+    size_t size = strlen(string) + 1;
+    char* result = (char*) malloc(sizeof(char) * size);
+    strcpy(result, string);
+    return result;
+}
