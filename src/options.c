@@ -22,6 +22,8 @@
 
 #include "options.h"
 
+#define NOT_FOUND "*"
+
 extern void options_init(Options* options) {
     options->max_size = 0;
     info_init(&options->info);
@@ -34,15 +36,17 @@ extern void options_free(Options* options) {
 }
 
 extern void options_add(Options* options, Option option) {
-    size_t size = strlen(option.name);
-    if (size > options->max_size) {
-        options->max_size = size;
-    }
+    if (strcmp(NOT_FOUND, option.name) != 0) {
+        size_t size = strlen(option.name);
+        if (size > options->max_size) {
+            options->max_size = size;
+        }
 
-    info_put(&options->info, (InfoItem) {
-        .name = option.name,
-        .description = option.description
-    });
+        info_put(&options->info, (InfoItem) {
+            .name = option.name,
+            .description = option.description
+        });
+    }
 
     tokenize(option.name, ", ", token, {
         handlers_put(&options->handlers, (Handler) {
@@ -51,6 +55,18 @@ extern void options_add(Options* options, Option option) {
             .payload = option.payload
         });
     });
+}
+
+extern void options_run(Options* options, const char* option) {
+    Handler* result = handlers_get(&options->handlers, option);
+    if (result != NULL) {
+        return result->handle(result->payload);
+    }
+
+    result = handlers_get(&options->handlers, NOT_FOUND);
+    if (result != NULL) {
+        return result->handle(result->payload);
+    }
 }
 
 extern void options_print(Options* options) {

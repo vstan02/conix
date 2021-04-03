@@ -24,15 +24,25 @@
 
 typedef struct t_CnxCli CnxCli;
 typedef struct t_CnxApp CnxApp;
+typedef struct t_CnxOption CnxOption;
 
 struct t_CnxApp {
     const char* name;
     const char* version;
 };
 
-extern CnxCli* cnx_cli_init(CnxApp app, size_t argc, const char** argv);
+struct t_CnxOption {
+    const char* name;
+    const char* description;
+    void (*handle)(void*);
+    void* payload;
+};
+
+extern CnxCli* cnx_cli_init(CnxApp app);
 extern void cnx_cli_free(CnxCli* cli);
 
-extern void cnx_cli_run(CnxCli* cli);
+extern void cnx_cli_run(CnxCli* cli, size_t argc, const char** argv);
+
+extern void cnx_cli_add(CnxCli* cli, size_t count, CnxOption* options);
 
 #endif // CONIX_CONIX_H

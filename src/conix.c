@@ -22,19 +22,27 @@
 #include "conix.h"
 #include "options.h"
 
+#define DEFAULT_OPTION "--default"
+
 struct t_CnxCli {
-    size_t argc;
-    const char** argv;
     CnxApp app;
     Options options;
 };
 
-extern CnxCli* cnx_cli_init(CnxApp app, size_t argc, const char** argv) {
+static void help(CnxCli*);
+static void version(CnxCli*);
+
+extern CnxCli* cnx_cli_init(CnxApp app) {
     CnxCli* cli = (CnxCli*) malloc(sizeof(CnxCli));
     cli->app = app;
-    cli->argc = argc;
-    cli->argv = argv;
     options_init(&cli->options);
+
+    cnx_cli_add(cli, 3, (CnxOption[]) {
+        { "-h, --help", "Display this information", (handle_t)help, cli },
+        { "-v, --version", "Display version information", (handle_t)version, cli },
+        { "*", NULL, (handle_t)help, cli }
+    });
+
     return cli;
 }
 
@@ -45,17 +53,26 @@ extern void cnx_cli_free(CnxCli* cli) {
     }
 }
 
-extern void cnx_cli_run(CnxCli* cli) {
-    options_add(&cli->options, (Option) {
-        .name = "-h, --help", .description = "Display this information"
-    });
-    options_add(&cli->options, (Option) {
-        .name = "-v, --version", .description = "Display version information"
-    });
-    options_add(&cli->options, (Option) {
-        .name = "-a, --about", .description = "Display other information"
-    });
+extern void cnx_cli_run(CnxCli* cli, size_t argc, const char** argv) {
+    options_run(&cli->options, argc > 1 ? argv[1] : DEFAULT_OPTION);
+}
 
+extern void cnx_cli_add(CnxCli* cli, size_t count, CnxOption* options) {
+    foreach(i, 0, count) {
+        options_add(&cli->options, (Option) {
+            .name = options[i].name,
+            .description = options[i].description,
+            .payload = options[i].payload,
+            .handle = options[i].handle
+        });
+    }
+}
+
+static void help(CnxCli* cli) {
     printf("Usage: %s [options]\n\n", cli->app.name);
     options_print(&cli->options);
+}
+
+static void version(CnxCli* cli) {
+    printf("%s: v%s\n", cli->app.name, cli->app.version);
 }

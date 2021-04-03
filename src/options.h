@@ -45,5 +45,6 @@ extern void options_free(Options* options);
 extern void options_print(Options* options);
 
 extern void options_add(Options* options, Option option);
+extern void options_run(Options* options, const char* option);
 
 #endif // CONIX_OPTIONS_H
