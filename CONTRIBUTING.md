@@ -1,5 +1,4 @@
 # Contributing
-
 To get started, fork the repository to your account and then clone your fork to your local machine.
 
 You can now start working on the project, but before you do, here are some general guidelines that will make contributing a lot easier:
@@ -7,6 +6,7 @@ You can now start working on the project, but before you do, here are some gener
 - when writing code, make sure that the code you write is formatted in the same way that everything else is formatted.
 - if you are writing some new code that is not covered by the tests, try to write tests for it too
 - before committing your changes make sure that the project builds correctly and that the tests are passing
+- don't forget to add your name and your email (and some information about the file if it's new) address to the comments in the head of files
 
 After you're done working on your changes, commit your work and push it to your fork.
 
