@@ -12,7 +12,6 @@
   - [Running demo](#running-demo)
   - [Running tests](#running-tests)
   - [Installing](#installing)
-- [Directory structure](#directory-structure)
 - [License](#license)
 - [Contributing](#contributing)
 
@@ -89,12 +88,6 @@ To install the library run:
 sudo make install
 ```
 By default the libraries and headers will be installed in `/usr/local/lib/` and `/usr/local/include` directories.
-
-## Directory structure
-- src - containing the source code of the library
-- include - containing public headers
-- test - containing the unit tests
-- demo - containing a sample app to see how to use Conix.
 
 ## License
 Conix is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
