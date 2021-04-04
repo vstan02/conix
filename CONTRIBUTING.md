@@ -12,6 +12,8 @@ After you're done working on your changes, commit your work and push it to your 
 
 You can then open a pull request from your fork to the upstream repository. After the pull request is made, we will comment / review it and might also suggest some changes. After all that is done, the pull request is merged.
 
-## Finding something to work on
-There is always something to work on, be it fixing bugs, writing documentation or adding cool new features. You can start by looking through the [issues](https://github.com/vstan02/conix/issues) to find something interesting.
-If you have a cool new idea, or you've found a bug and there is no issue for it, go ahead and open a [new issue](https://github.com/vstan02/conix/issues/new) for it.
+## How to contribute
+You can contribute in many ways:
+- fix some bugs
+- add some new cool features
+- open a new issue if you have a new idea, or you've found a bug and there is no issue for it
