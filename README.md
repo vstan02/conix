@@ -40,6 +40,8 @@ cnx_cli_run(cli, argc, argv);
 cnx_cli_free(cli);
 ```
 
+After project building you can run this example as you can see [here](#running-demo).
+
 ## Building and Installation
 
 ### Dependencies
