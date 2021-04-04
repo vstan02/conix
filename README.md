@@ -26,14 +26,15 @@ CnxCli* cli = cnx_cli_init(app);
 cnx_cli_add(cli, 4, (CnxOption[]) {
 	{ "-a, --about", "Display something", about_option, (void*)app.name },
 	
-	// handlers for "-v, --version" and "-h, --help" options are 
-	// added by default, but you can add your own handlers for them
+	// Handlers for "-v, --version" and "-h, --help" options are
+	// added by default, but you can add your own handlers for them.
 	{ "-v, --version", "Display version", version_option, &app },
 	
-	// "--default" - handler for this option is called when are no arguments passed
+	// Handler for "--default" option is called when are no arguments passed.
 	{ "--default", "Default option", index_option, (void*)app.name },
 	
-	// "*" - handler for this option is called when is passed an unknown cli option
+	// Handler for "*" this option is called when is passed an unknown cli option.
+	// By default it has the same handler as the "-h, --help" option.
 	{ "*", NULL, not_found_option, (void*)app.name }
 });
 
