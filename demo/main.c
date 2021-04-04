@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <conix.h>
 
-CnxApp app = { "my_app", "3.1.1" };
-
 void index_option(void* payload) {
     printf("Welcome to %s!\n", (char*)payload);
 }
@@ -16,6 +14,7 @@ void not_found_option(void* payload) {
 }
 
 int main(int argc, const char** argv) {
+    CnxApp app = { "my_app", "3.1.1" };
     CnxCli* cli = cnx_cli_init(app);
 
     cnx_cli_add(cli, 3, (CnxOption[]) {
