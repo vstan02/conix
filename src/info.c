@@ -57,7 +57,7 @@ extern void info_put(Info* info, InfoItem value) {
         if (diff < 0) return push(info, _index, value);
 
         free((char*) current.description);
-        current.description = str_copy(value.description);
+        info->values[_index].description = str_copy(value.description);
         return;
     });
 }
