@@ -1,6 +1,19 @@
 # Contributing
 
-When contributing to this repository, please first discuss the change you wish to make via issue,
-email, or any other method with the owners of this repository before making a change.
+To get started, fork the repository to your account and then clone your fork to your local machine.
 
-Please note we have a code of conduct, please follow it in all your interactions with the project.
+You can now start working on the project, but before you do, here are some general guidelines that will make contributing a lot easier:
+- if you wish to work on some major new feature, it's usually a good idea to open an issue first, so that it can be discussed
+- when writing code, make sure that the code you write is formatted in the same way that everything else is formatted.
+- if you are writing some new code that is not covered by the tests, try to write tests for it too
+- before committing your changes make sure that the project builds correctly and that the tests are passing
+
+After you're done working on your changes, commit your work and push it to your fork.
+
+You can then open a pull request from your fork to the upstream repository. After the pull request is made, we will comment / review it and might also suggest some changes. After all that is done, the pull request is merged.
+
+## Finding something to work on
+There is always something to work on, be it fixing bugs, writing documentation or adding cool new features. You can start by looking through the [issues](https://github.com/srdja/Collections-C/issues) to find something interesting.
+If you have a cool new idea, or you've found a bug and there is no issue for it, go ahead and open a [new issue](https://github.com/srdja/Collections-C/issues/new) for it.
+
+If you're just starting out, look for issues with a [low-hanging fruit](https://github.com/srdja/Collections-C/issues?q=is%3Aissue+is%3Aopen+label%3A%22low-hanging+fruit%22) tag. These issues should be fairly easy to fix, and they are also a good starting point for contributing.
