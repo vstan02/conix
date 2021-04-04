@@ -13,7 +13,5 @@ After you're done working on your changes, commit your work and push it to your 
 You can then open a pull request from your fork to the upstream repository. After the pull request is made, we will comment / review it and might also suggest some changes. After all that is done, the pull request is merged.
 
 ## Finding something to work on
-There is always something to work on, be it fixing bugs, writing documentation or adding cool new features. You can start by looking through the [issues](https://github.com/srdja/Collections-C/issues) to find something interesting.
-If you have a cool new idea, or you've found a bug and there is no issue for it, go ahead and open a [new issue](https://github.com/srdja/Collections-C/issues/new) for it.
-
-If you're just starting out, look for issues with a [low-hanging fruit](https://github.com/srdja/Collections-C/issues?q=is%3Aissue+is%3Aopen+label%3A%22low-hanging+fruit%22) tag. These issues should be fairly easy to fix, and they are also a good starting point for contributing.
+There is always something to work on, be it fixing bugs, writing documentation or adding cool new features. You can start by looking through the [issues](https://github.com/vstan02/conix/issues) to find something interesting.
+If you have a cool new idea, or you've found a bug and there is no issue for it, go ahead and open a [new issue](https://github.com/vstan02/conix/issues/new) for it.
