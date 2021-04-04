@@ -2,7 +2,7 @@
 > Command line interface building library
 
 [![Build Status](https://api.travis-ci.org/vstan02/conix.svg?branch=master)](https://travis-ci.org/github/vstan02/conix)
-[![License: LGPL v3](https://img.shields.io/badge/license-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0)
+[![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 ## Building and Installation
 
