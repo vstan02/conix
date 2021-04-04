@@ -29,7 +29,7 @@ cnx_cli_add(cli, 4, (CnxOption[]) {
 	
 	// handlers for "-v, --version" and "-h, --help" options are 
 	// added by default, but you can add your own handlers for them
-	{ "-v, --version", "Display version", version_option, (void*)app.name },
+	{ "-v, --version", "Display version", version_option, &app },
 	
 	// "--default" - handler for this option is called when are no arguments passed
 	{ "--default", "Default option", index_option, (void*)app.name },
