@@ -7,6 +7,11 @@
 ## Contents
 - [Usage](#usage)
 - [Building and Installation](#building-and-installation)
+  - [Dependencies](#dependencies)
+  - [Building the project](#building-the-project)
+  - [Running demo](#running-demo)
+  - [Running tests](#running-tests)
+  - [Installing](#installing)
 - [Directory structure](#directory-structure)
 - [License](#license)
 - [Contributing](#contributing)
