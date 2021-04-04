@@ -52,7 +52,6 @@ After project building you can run this example as you can see [here](#running-d
 ### Dependencies
 - C compiler (gcc, clang, etc...)
 - cmake (>= 3.16)
-- pkg-config (for testing)
 - glib (v2.0) (for testing)
 
 These packages can usually be installed through your distributions package manager.
