@@ -9,21 +9,39 @@ void about_option(void* payload) {
     printf("%s is a simple app created with conix!\n", (char*)payload);
 }
 
+void version_option(void* payload) {
+    CnxApp* app = (CnxApp*)payload;
+    printf("%s -> %s\n", app->name, app->version);
+}
+
 void not_found_option(void* payload) {
     printf("%s: Invalid option!\n", (char*)payload);
 }
 
 int main(int argc, const char** argv) {
-    CnxApp app = { "my_app", "3.1.1" };
+    // Creating an new cli instance:
+    CnxApp app = { "my_app", "2.8.1" };
     CnxCli* cli = cnx_cli_init(app);
 
-    cnx_cli_add(cli, 3, (CnxOption[]) {
-        { "--default", "Default option", index_option, (void*)app.name },
+    // Adding some options for handling:
+    cnx_cli_add(cli, 4, (CnxOption[]) {
         { "-a, --about", "Display something", about_option, (void*)app.name },
+
+        // handlers for "-v, --version" and "-h, --help" options are
+        // added by default, but you can add your own handlers for them
+        { "-v, --version", "Display version", version_option, &app },
+
+        // "--default" - handler for this option is called when is no arguments passed
+        { "--default", "Default option", index_option, (void*)app.name },
+
+        // "*" - handler for this option is called when is passed an invalid cli option
         { "*", NULL, not_found_option, (void*)app.name }
     });
 
+    // Running for some command line arguments:
     cnx_cli_run(cli, argc, argv);
+
+    // Destroying the instance:
     cnx_cli_free(cli);
     return 0;
 }

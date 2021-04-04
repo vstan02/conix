@@ -5,10 +5,40 @@
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 ## Contents
+- [Usage](#usage)
 - [Building and Installation](#building-and-installation)
 - [Directory structure](#directory-structure)
 - [License](#license)
 - [Contributing](#contributing)
+
+## Usage
+Here there is an example of usage (for the full version see [demo/main.c](https://github.com/vstan02/conix/blob/master/demo/main.c) file):
+```c
+// Creating an new cli instance:
+CnxApp app = { "my_app", "2.8.1" };
+CnxCli* cli = cnx_cli_init(app);
+
+// Adding some options for handling:
+cnx_cli_add(cli, 4, (CnxOption[]) {
+	{ "-a, --about", "Display something", about_option, (void*)app.name },
+	
+	// handlers for "-v, --version" and "-h, --help" options are 
+	// added by default, but you can add your own handlers for them
+	{ "-v, --version", "Display version", version_option, (void*)app.name },
+	
+	// "--default" - handler for this option is called when is no arguments passed
+	{ "--default", "Default option", index_option, (void*)app.name },
+	
+	// "*" - handler for this option is called when is passed an invalid cli option
+	{ "*", NULL, not_found_option, (void*)app.name }
+});
+
+// Running for some command line arguments:
+cnx_cli_run(cli, argc, argv);
+
+// Destroying the instance:
+cnx_cli_free(cli);
+```
 
 ## Building and Installation
 
