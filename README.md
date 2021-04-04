@@ -26,10 +26,10 @@ cnx_cli_add(cli, 4, (CnxOption[]) {
 	// added by default, but you can add your own handlers for them
 	{ "-v, --version", "Display version", version_option, (void*)app.name },
 	
-	// "--default" - handler for this option is called when is no arguments passed
+	// "--default" - handler for this option is called when are no arguments passed
 	{ "--default", "Default option", index_option, (void*)app.name },
 	
-	// "*" - handler for this option is called when is passed an invalid cli option
+	// "*" - handler for this option is called when is passed an unknown cli option
 	{ "*", NULL, not_found_option, (void*)app.name }
 });
 
