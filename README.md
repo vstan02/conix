@@ -1,7 +1,8 @@
 # Conix
 > Command line interface building library
 
-[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0)
+[![Build Status](https://api.travis-ci.org/vstan02/conix.svg?branch=master)](https://travis-ci.org/github/vstan02/conix)
+[![License: LGPL v3](https://img.shields.io/badge/license-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0)
 
 ## Building and Installation
 
