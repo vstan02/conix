@@ -16,7 +16,7 @@
 - [Contributing](#contributing)
 
 ## Usage
-Here there is an example of usage (for the full version see [demo/main.c](https://github.com/vstan02/conix/blob/master/demo/main.c) file):
+Here is an example of usage (for the full version see [demo/main.c](https://github.com/vstan02/conix/blob/master/demo/main.c) file):
 ```c
 // Creating an new cli instance:
 CnxApp app = { "my_app", "2.8.1" };
