@@ -24,6 +24,7 @@ CnxCli* cli = cnx_cli_init(app);
 
 // Adding some options for handling:
 cnx_cli_add(cli, 4, (CnxOption[]) {
+	// CnxOption -> { name, description, handler, payload }.
 	{ "-a, --about", "Display something", about_option, (void*)app.name },
 	
 	// Handlers for "-v, --version" and "-h, --help" options are
