@@ -47,7 +47,7 @@ extern CnxCli* cnx_cli_init(CnxApp app) {
 }
 
 extern void cnx_cli_free(CnxCli* cli) {
-    if (cli) {
+    if (cli != NULL) {
         options_free(&cli->options);
         free(cli);
     }
