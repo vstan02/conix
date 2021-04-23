@@ -53,11 +53,11 @@ extern void cnx_cli_free(CnxCli* cli) {
     }
 }
 
-extern void cnx_cli_run(CnxCli* cli, size_t argc, const char** argv) {
+extern void cnx_cli_run(CnxCli* cli, size_t argc, const char* argv[]) {
     options_run(&cli->options, argc > 1 ? argv[1] : DEFAULT_OPTION);
 }
 
-extern void cnx_cli_add(CnxCli* cli, size_t count, CnxOption* options) {
+extern void cnx_cli_add(CnxCli* cli, size_t count, CnxOption options[]) {
     foreach(i, 0, count) {
         options_add(&cli->options, (Option) {
             .name = options[i].name,
