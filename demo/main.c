@@ -10,7 +10,7 @@ void about_option(void* payload) {
 }
 
 void version_option(void* payload) {
-    CnxApp* app = (CnxApp*)payload;
+    cnx_app_t* app = (cnx_app_t*)payload;
     printf("%s -> %s\n", app->name, app->version);
 }
 
@@ -20,11 +20,11 @@ void not_found_option(void* payload) {
 
 int main(int argc, const char** argv) {
     // Creating an new cli instance:
-    CnxApp app = { "my_app", "2.8.1" };
-    CnxCli* cli = cnx_cli_init(app);
+    cnx_app_t app = { "my_app", "2.8.1" };
+    cnx_cli_t* cli = cnx_cli_init(app);
 
     // Adding some options for handling:
-    cnx_cli_add(cli, 4, (CnxOption[]) {
+    cnx_cli_add(cli, 4, (cnx_option_t[]) {
         // CnxOption -> { name, description, handler, payload }.
         { "-a, --about", "Display something", about_option, (void*)app.name },
 

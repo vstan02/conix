@@ -29,8 +29,8 @@ extern void add_handlers_tests(void) {
 }
 
 static void test_handlers_main(void) {
-    Handlers handlers;
-    Handler items[] = {
+    handlers_t handlers;
+    handler_t items[] = {
         { "1", "First item", NULL },
         { "2", "Second item", NULL },
         { "3", "Third item", NULL }
@@ -42,7 +42,7 @@ static void test_handlers_main(void) {
         handlers_put(&handlers, items[i]);
     }
 
-    Handler* result = handlers_get(&handlers, "45");
+    handler_t* result = handlers_get(&handlers, "45");
     g_assert_null(result);
 
     foreach(i, 0, 3) {

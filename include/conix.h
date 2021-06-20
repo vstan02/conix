@@ -22,27 +22,27 @@
 
 #include <stddef.h>
 
-typedef struct t_CnxCli CnxCli;
-typedef struct t_CnxApp CnxApp;
-typedef struct t_CnxOption CnxOption;
+typedef struct cnx_cli cnx_cli_t;
+typedef struct cnx_app cnx_app_t;
+typedef struct cnx_option cnx_option_t;
 
-struct t_CnxApp {
+struct cnx_app {
     const char* name;
     const char* version;
 };
 
-struct t_CnxOption {
+struct cnx_option {
     const char* name;
     const char* description;
     void (*handle)(void*);
     void* payload;
 };
 
-extern CnxCli* cnx_cli_init(CnxApp app);
-extern void cnx_cli_free(CnxCli* cli);
+extern cnx_cli_t* cnx_cli_init(cnx_app_t app);
+extern void cnx_cli_free(cnx_cli_t* cli);
 
-extern void cnx_cli_run(CnxCli* cli, size_t argc, const char* argv[]);
+extern void cnx_cli_run(cnx_cli_t* cli, size_t argc, const char* argv[]);
 
-extern void cnx_cli_add(CnxCli* cli, size_t count, CnxOption options[]);
+extern void cnx_cli_add(cnx_cli_t* cli, size_t count, cnx_option_t options[]);
 
 #endif // CONIX_CONIX_H

@@ -24,24 +24,24 @@
 
 #define HANDLER_STORES 10
 
-typedef struct t_Handler Handler;
-typedef struct t_Handlers Handlers;
-typedef struct t_HandlerStore HandlerStore;
+typedef struct handler handler_t;
+typedef struct handlers handlers_t;
+typedef struct handler_store handler_store_t;
 
-struct t_Handler {
+struct handler {
     const char* id;
     void* payload;
     handle_t handle;
 };
 
-struct t_Handlers {
-    HandlerStore* stores[HANDLER_STORES];
+struct handlers {
+    handler_store_t* stores[HANDLER_STORES];
 };
 
-extern void handlers_init(Handlers* handlers);
-extern void handlers_free(Handlers* handlers);
+extern void handlers_init(handlers_t* handlers);
+extern void handlers_free(handlers_t* handlers);
 
-extern void handlers_put(Handlers* handlers, Handler handler);
-extern Handler* handlers_get(Handlers* handlers, const char* id);
+extern void handlers_put(handlers_t* handlers, handler_t handler);
+extern handler_t* handlers_get(handlers_t* handlers, const char* id);
 
 #endif // CONIX_HANDLERS_H

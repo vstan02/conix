@@ -24,20 +24,20 @@
 
 #define DEFAULT_OPTION "--default"
 
-struct t_CnxCli {
-    CnxApp app;
-    Options options;
+struct cnx_cli {
+    cnx_app_t app;
+    options_t options;
 };
 
-static void help(CnxCli*);
-static void version(CnxCli*);
+static void help(cnx_cli_t*);
+static void version(cnx_cli_t*);
 
-extern CnxCli* cnx_cli_init(CnxApp app) {
-    CnxCli* cli = (CnxCli*) malloc(sizeof(CnxCli));
+extern cnx_cli_t* cnx_cli_init(cnx_app_t app) {
+    cnx_cli_t* cli = (cnx_cli_t*) malloc(sizeof(cnx_cli_t));
     cli->app = app;
     options_init(&cli->options);
 
-    cnx_cli_add(cli, 3, (CnxOption[]) {
+    cnx_cli_add(cli, 3, (cnx_option_t[]) {
         { "-h, --help", "Display this information", (handle_t)help, cli },
         { "-v, --version", "Display version information", (handle_t)version, cli },
         { "*", NULL, (handle_t)help, cli }
@@ -46,20 +46,20 @@ extern CnxCli* cnx_cli_init(CnxApp app) {
     return cli;
 }
 
-extern void cnx_cli_free(CnxCli* cli) {
+extern void cnx_cli_free(cnx_cli_t* cli) {
     if (cli != NULL) {
         options_free(&cli->options);
         free(cli);
     }
 }
 
-extern void cnx_cli_run(CnxCli* cli, size_t argc, const char* argv[]) {
+extern void cnx_cli_run(cnx_cli_t* cli, size_t argc, const char* argv[]) {
     options_run(&cli->options, argc > 1 ? argv[1] : DEFAULT_OPTION);
 }
 
-extern void cnx_cli_add(CnxCli* cli, size_t count, CnxOption options[]) {
+extern void cnx_cli_add(cnx_cli_t* cli, size_t count, cnx_option_t options[]) {
     foreach(i, 0, count) {
-        options_add(&cli->options, (Option) {
+        options_add(&cli->options, (option_t) {
             .name = options[i].name,
             .description = options[i].description,
             .payload = options[i].payload,
@@ -68,11 +68,11 @@ extern void cnx_cli_add(CnxCli* cli, size_t count, CnxOption options[]) {
     }
 }
 
-static void help(CnxCli* cli) {
+static void help(cnx_cli_t* cli) {
     printf("Usage: %s [options]\n\n", cli->app.name);
     options_print(&cli->options);
 }
 
-static void version(CnxCli* cli) {
+static void version(cnx_cli_t* cli) {
     printf("%s v%s\n", cli->app.name, cli->app.version);
 }
