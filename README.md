@@ -20,12 +20,12 @@
 Here is an example of usage (for the full version see [demo/main.c](https://github.com/vstan02/conix/blob/master/demo/main.c) file):
 ```c
 // Creating an new cli instance:
-CnxApp app = { "my_app", "2.8.1" };
-CnxCli* cli = cnx_cli_init(app);
+cnx_app_t app = { "my_app", "2.8.1" };
+cnx_cli_t* cli = cnx_cli_init(app);
 
 // Adding some options for handling:
-cnx_cli_add(cli, 4, (CnxOption[]) {
-	// CnxOption -> { name, description, handler, payload }.
+cnx_cli_add(cli, 4, (cnx_option_t[]) {
+	// cnx_option_t -> { name, description, handler, payload }.
 	{ "-a, --about", "Display something", about_option, (void*)app.name },
 	
 	// Handlers for "-v, --version" and "-h, --help" are added
