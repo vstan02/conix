@@ -24,7 +24,7 @@
 
 #define NOT_FOUND "*"
 
-extern void options_init(options_t* options) {
+extern void options_init(options_t* options, void* payload) {
     options->max_size = 0;
     info_init(&options->info);
     handlers_init(&options->handlers);
@@ -60,12 +60,12 @@ extern void options_add(options_t* options, option_t option) {
 extern void options_run(options_t* options, const char* option) {
     handler_t* result = handlers_get(&options->handlers, option);
     if (result != NULL) {
-        return result->handle(result->payload);
+        return result->handle(options->payload, result->payload);
     }
 
     result = handlers_get(&options->handlers, NOT_FOUND);
     if (result != NULL) {
-        return result->handle(result->payload);
+        return result->handle(options->payload, result->payload);
     }
 }
 

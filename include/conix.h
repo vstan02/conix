@@ -25,6 +25,7 @@
 typedef struct cnx_cli cnx_cli_t;
 typedef struct cnx_app cnx_app_t;
 typedef struct cnx_option cnx_option_t;
+typedef void(*cnx_handle_t)(cnx_app_t*, void*);
 
 struct cnx_app {
     const char* name;
@@ -34,7 +35,7 @@ struct cnx_app {
 struct cnx_option {
     const char* name;
     const char* description;
-    void (*handle)(void*);
+    cnx_handle_t handle;
     void* payload;
 };
 

@@ -27,6 +27,7 @@ typedef struct option option_t;
 typedef struct options options_t;
 
 struct options {
+    void* payload;
     info_t info;
     handlers_t handlers;
     size_t max_size;
@@ -39,7 +40,7 @@ struct option {
     void* payload;
 };
 
-extern void options_init(options_t* options);
+extern void options_init(options_t* options, void* payload);
 extern void options_free(options_t* options);
 
 extern void options_print(options_t* options);

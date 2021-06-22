@@ -35,7 +35,7 @@ static void version(cnx_cli_t*);
 extern cnx_cli_t* cnx_cli_init(cnx_app_t app) {
     cnx_cli_t* cli = (cnx_cli_t*) malloc(sizeof(cnx_cli_t));
     cli->app = app;
-    options_init(&cli->options);
+    options_init(&cli->options, &cli->app);
 
     cnx_cli_add(cli, 3, (cnx_option_t[]) {
         { "-h, --help", "Display this information", (handle_t)help, cli },
