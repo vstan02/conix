@@ -24,12 +24,19 @@
 
 typedef struct cnx_cli cnx_cli_t;
 typedef struct cnx_app cnx_app_t;
+typedef struct cnx_ctx cnx_ctx_t;
 typedef struct cnx_option cnx_option_t;
-typedef void(*cnx_handle_t)(cnx_app_t*, void*);
+typedef void(*cnx_handle_t)(cnx_ctx_t*, void*);
 
 struct cnx_app {
     const char* name;
     const char* version;
+};
+
+struct cnx_ctx {
+    cnx_app_t app;
+    size_t argc;
+    const char** argv;
 };
 
 struct cnx_option {

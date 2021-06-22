@@ -1,20 +1,27 @@
 #include <stdio.h>
 #include <conix.h>
 
-void index_option(cnx_app_t* app, void* payload) {
-    printf("Welcome to %s!\n", app->name);
+void index_option(cnx_ctx_t* ctx, void* payload) {
+    printf("Welcome to %s!\n", ctx->app.name);
 }
 
-void about_option(cnx_app_t* app, void* payload) {
-    printf("%s is a simple app created with conix!\n", app->name);
+void about_option(cnx_ctx_t* ctx, void* payload) {
+    printf("%s is a simple app created with conix!\n", ctx->app.name);
 }
 
-void version_option(cnx_app_t* app, void* payload) {
-    printf("%s -> %s\n", app->name, app->version);
+void version_option(cnx_ctx_t* ctx, void* payload) {
+    printf("%s -> %s\n", ctx->app.name, ctx->app.version);
 }
 
-void not_found_option(cnx_app_t* app, void* payload) {
-    printf("%s: Invalid option!\n", app->name);
+void print_args_option(cnx_ctx_t* ctx, void* payload) {
+    printf("Total arguments: %zu\n", ctx->argc - 1);
+    for (size_t i = 1; i < ctx->argc; ++i) {
+        printf("%zu -> %s\n", i, ctx->argv[i]);
+    }
+}
+
+void not_found_option(cnx_ctx_t* ctx, void* payload) {
+    printf("%s: Invalid option!\n", ctx->app.name);
 }
 
 int main(int argc, const char** argv) {
@@ -22,9 +29,10 @@ int main(int argc, const char** argv) {
     cnx_cli_t* cli = cnx_cli_init((cnx_app_t) { "my_app", "2.8.1" });
 
     // Adding some options for handling:
-    cnx_cli_add(cli, 4, (cnx_option_t[]) {
+    cnx_cli_add(cli, 5, (cnx_option_t[]) {
         // CnxOption -> { name, description, handler, payload }.
         { "-a, --about", "Display something", about_option, NULL },
+        { "-p, --print", "Display passed arguments", print_args_option, NULL },
 
         // Handlers for "-v, --version" and "-h, --help" are added
         // by default, but you can add your own handlers for them.
