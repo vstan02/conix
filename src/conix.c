@@ -29,8 +29,8 @@ struct cnx_cli {
     options_t options;
 };
 
-static void help(cnx_cli_t*);
-static void version(cnx_cli_t*);
+static void help(cnx_app_t*, cnx_cli_t*);
+static void version(cnx_app_t*, void*);
 
 extern cnx_cli_t* cnx_cli_init(cnx_app_t app) {
     cnx_cli_t* cli = (cnx_cli_t*) malloc(sizeof(cnx_cli_t));
@@ -38,9 +38,9 @@ extern cnx_cli_t* cnx_cli_init(cnx_app_t app) {
     options_init(&cli->options, &cli->app);
 
     cnx_cli_add(cli, 3, (cnx_option_t[]) {
-        { "-h, --help", "Display this information", (handle_t)help, cli },
-        { "-v, --version", "Display version information", (handle_t)version, cli },
-        { "*", NULL, (handle_t)help, cli }
+        { "-h, --help", "Display this information", (cnx_handle_t)help, cli },
+        { "-v, --version", "Display version information", (cnx_handle_t)version, cli },
+        { "*", NULL, (cnx_handle_t)help, cli }
     });
 
     return cli;
@@ -63,16 +63,16 @@ extern void cnx_cli_add(cnx_cli_t* cli, size_t count, cnx_option_t options[]) {
             .name = options[i].name,
             .description = options[i].description,
             .payload = options[i].payload,
-            .handle = options[i].handle
+            .handle = (handle_t)options[i].handle
         });
     }
 }
 
-static void help(cnx_cli_t* cli) {
-    printf("Usage: %s [options]\n\n", cli->app.name);
+static void help(cnx_app_t* app, cnx_cli_t* cli) {
+    printf("Usage: %s [options]\n\n", app->name);
     options_print(&cli->options);
 }
 
-static void version(cnx_cli_t* cli) {
-    printf("%s v%s\n", cli->app.name, cli->app.version);
+static void version(cnx_app_t* app, void* payload) {
+    printf("%s v%s\n", app->name, app->version);
 }

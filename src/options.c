@@ -26,6 +26,8 @@
 
 extern void options_init(options_t* options, void* payload) {
     options->max_size = 0;
+    options->payload = payload;
+
     info_init(&options->info);
     handlers_init(&options->handlers);
 }
