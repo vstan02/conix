@@ -23,7 +23,7 @@ Here is an example of usage (for the full version see [demo/main.c](https://gith
 cnx_cli_t* cli = cnx_cli_init((cnx_app_t) { "my_app", "2.8.1" });
 
 // Adding some options for handling:
-cnx_cli_add(cli, 4, (cnx_option_t[]) {
+cnx_cli_add(cli, 5, (cnx_option_t[]) {
 	// cnx_option_t -> { name, description, handler, payload }.
 	{ "-a, --about", "Display something", about_option, NULL },
 	{ "-p, --print", "Display passed arguments", print_args_option, NULL },
