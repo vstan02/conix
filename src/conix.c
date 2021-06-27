@@ -21,6 +21,7 @@
 
 #include "conix.h"
 #include "options.h"
+#include "config.h"
 
 #define DEFAULT_OPTION "--default"
 
@@ -44,6 +45,11 @@ extern cnx_cli_t* cnx_cli_init(cnx_app_t app) {
     });
 
     return cli;
+}
+
+extern cnx_cli_t* cnx_cli_from_file(const char* path) {
+    config_t config = config_parse(path);
+    return cnx_cli_init((cnx_app_t) { config.name, config.version });
 }
 
 extern void cnx_cli_free(cnx_cli_t* cli) {

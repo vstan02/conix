@@ -10,6 +10,7 @@ set(
     src/options.c
     src/info.c
     src/handlers.c
+    src/config.c
 )
 
 set(
@@ -31,7 +32,7 @@ link_directories(${GLIB_LIBRARY_DIRS})
 
 add_definitions(${GLIB_CFLAGS_OTHER})
 
-add_executable(demo demo/main.c)
+add_executable(demo demo/file_config.c)
 target_link_libraries(demo conix)
 
 add_executable(test test/main.c ${CONIX_TESTS})

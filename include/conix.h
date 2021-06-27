@@ -47,6 +47,7 @@ struct cnx_option {
 };
 
 extern cnx_cli_t* cnx_cli_init(cnx_app_t app);
+extern cnx_cli_t* cnx_cli_from_file(const char* path);
 extern void cnx_cli_free(cnx_cli_t* cli);
 
 extern void cnx_cli_run(cnx_cli_t* cli, size_t argc, const char* argv[]);
