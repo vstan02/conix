@@ -25,28 +25,28 @@
 #define info_foreach(info, item, body) \
     do { \
         foreach(_index, 0, (info).length) { \
-            InfoItem item = (info).values[_index]; \
+            info_item_t item = (info).values[_index]; \
             body; \
         } \
     } while (0)
 
-typedef struct t_Info Info;
-typedef struct t_InfoItem InfoItem;
+typedef struct info info_t;
+typedef struct info_item info_item_t;
 
-struct t_Info {
+struct info {
     size_t size;
     size_t length;
-    InfoItem* values;
+    info_item_t* values;
 };
 
-struct t_InfoItem {
+struct info_item {
     const char* name;
     const char* description;
 };
 
-extern void info_init(Info* info);
-extern void info_free(Info* info);
+extern void info_init(info_t* info);
+extern void info_free(info_t* info);
 
-extern void info_put(Info* info, InfoItem item);
+extern void info_put(info_t* info, info_item_t item);
 
 #endif // CONIX_INFO_H

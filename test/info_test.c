@@ -29,8 +29,8 @@ extern void add_info_tests(void) {
 }
 
 static void test_info_main(void) {
-    Info info;
-    InfoItem items[] = {
+    info_t info;
+    info_item_t items[] = {
         { "3", "Third item" },
         { "2", "Second item" },
         { "1", "First item" }

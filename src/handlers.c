@@ -22,32 +22,32 @@
 
 #include "handlers.h"
 
-struct t_HandlerStore {
-    Handler data;
-    HandlerStore* next;
+struct handler_store {
+    handler_t data;
+    handler_store_t* next;
 };
 
 static size_t hash(const char*);
 
-extern void handlers_init(Handlers* handlers) {
+extern void handlers_init(handlers_t* handlers) {
     foreach(i, 0, HANDLER_STORES) {
         handlers->stores[i] = NULL;
     }
 }
 
-extern void handlers_free(Handlers* handlers) {
+extern void handlers_free(handlers_t* handlers) {
     foreach(i, 0, HANDLER_STORES) {
-        HandlerStore* store = handlers->stores[i];
+        handler_store_t* store = handlers->stores[i];
         while (store != NULL) {
-            HandlerStore* current = store;
+            handler_store_t* current = store;
             store = store->next;
             free(current);
         }
     }
 }
 
-extern void handlers_put(Handlers* handlers, Handler handler) {
-    HandlerStore* store = (HandlerStore*) malloc(sizeof(HandlerStore));
+extern void handlers_put(handlers_t* handlers, handler_t handler) {
+    handler_store_t* store = (handler_store_t*) malloc(sizeof(handler_store_t));
     store->data = handler;
 
     size_t index = hash(handler.id);
@@ -55,8 +55,8 @@ extern void handlers_put(Handlers* handlers, Handler handler) {
     handlers->stores[index] = store;
 }
 
-extern Handler* handlers_get(Handlers* handlers, const char* id) {
-    HandlerStore* store = handlers->stores[hash(id)];
+extern handler_t* handlers_get(handlers_t* handlers, const char* id) {
+    handler_store_t* store = handlers->stores[hash(id)];
     while (store != NULL) {
         if (!strcmp(store->data.id, id)) {
             return &store->data;

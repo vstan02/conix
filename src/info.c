@@ -30,14 +30,14 @@
 #define reallocate(type, array, size) \
     (type*) realloc(array, size * sizeof(type))
 
-static void push(Info*, size_t, InfoItem);
+static void push(info_t*, size_t, info_item_t);
 
-extern void info_init(Info* info) {
+extern void info_init(info_t* info) {
     info->length = info->size = 0;
     info->values = NULL;
 }
 
-extern void info_free(Info* info) {
+extern void info_free(info_t* info) {
     if (info->values == NULL) return;
     info_foreach(*info, item, {
         free((char*) item.name);
@@ -46,7 +46,7 @@ extern void info_free(Info* info) {
     free(info->values);
 }
 
-extern void info_put(Info* info, InfoItem value) {
+extern void info_put(info_t* info, info_item_t value) {
     if (info->values == NULL || strcmp(value.name, last_name(info)) > 0) {
         return push(info, info->length, value);
     }
@@ -62,10 +62,10 @@ extern void info_put(Info* info, InfoItem value) {
     });
 }
 
-static void push(Info* info, size_t index, InfoItem value) {
+static void push(info_t* info, size_t index, info_item_t value) {
     if (info->length == info->size) {
         info->size = info->size ? info->size * 2 : BASE_SIZE;
-        info->values = reallocate(InfoItem, info->values, info->size);
+        info->values = reallocate(info_item_t, info->values, info->size);
         if (info->values == NULL) exit(EXIT_FAILURE);
     }
 
@@ -74,7 +74,7 @@ static void push(Info* info, size_t index, InfoItem value) {
     }
 
     ++info->length;
-    info->values[index] = (InfoItem) {
+    info->values[index] = (info_item_t) {
         .name = str_copy(value.name),
         .description = str_copy(value.description)
     };

@@ -20,24 +20,24 @@
 Here is an example of usage (for the full version see [demo/main.c](https://github.com/vstan02/conix/blob/master/demo/main.c) file):
 ```c
 // Creating an new cli instance:
-CnxApp app = { "my_app", "2.8.1" };
-CnxCli* cli = cnx_cli_init(app);
+cnx_cli_t* cli = cnx_cli_init((cnx_app_t) { "my_app", "2.8.1" });
 
 // Adding some options for handling:
-cnx_cli_add(cli, 4, (CnxOption[]) {
-	// CnxOption -> { name, description, handler, payload }.
-	{ "-a, --about", "Display something", about_option, (void*)app.name },
+cnx_cli_add(cli, 5, (cnx_option_t[]) {
+	// cnx_option_t -> { name, description, handler, payload }.
+	{ "-a, --about", "Display something", about_option, NULL },
+	{ "-p, --print", "Display passed arguments", print_args_option, NULL },
 	
 	// Handlers for "-v, --version" and "-h, --help" are added
 	// by default, but you can add your own handlers for them.
-	{ "-v, --version", "Display version", version_option, &app },
+	{ "-v, --version", "Display version", version_option, NULL },
 	
 	// Handler for "--default" is called when are no arguments passed.
-	{ "--default", "Default option", index_option, (void*)app.name },
+	{ "--default", "Default option", index_option, NULL },
 	
 	// Handler for "*" is called when is passed an unknown cli option.
 	// By default it has the same handler as the "-h, --help" option.
-	{ "*", NULL, not_found_option, (void*)app.name }
+	{ "*", NULL, not_found_option, NULL }
 });
 
 // Running for some command line arguments:

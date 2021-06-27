@@ -34,7 +34,7 @@
         } \
     } while (0)
 
-typedef void (*handle_t)(void*);
+typedef void (*handle_t)(void*, void*);
 
 extern char* str_copy(const char* string);
 

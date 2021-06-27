@@ -23,28 +23,29 @@
 #include "info.h"
 #include "handlers.h"
 
-typedef struct t_Option Option;
-typedef struct t_Options Options;
+typedef struct option option_t;
+typedef struct options options_t;
 
-struct t_Options {
-    Info info;
-    Handlers handlers;
+struct options {
+    void* payload;
+    info_t info;
+    handlers_t handlers;
     size_t max_size;
 };
 
-struct t_Option {
+struct option {
     const char* name;
     const char* description;
     handle_t handle;
     void* payload;
 };
 
-extern void options_init(Options* options);
-extern void options_free(Options* options);
+extern void options_init(options_t* options, void* payload);
+extern void options_free(options_t* options);
 
-extern void options_print(Options* options);
+extern void options_print(options_t* options);
 
-extern void options_add(Options* options, Option option);
-extern void options_run(Options* options, const char* option);
+extern void options_add(options_t* options, option_t option);
+extern void options_run(options_t* options, const char* option);
 
 #endif // CONIX_OPTIONS_H
