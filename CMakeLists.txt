@@ -6,7 +6,6 @@ set(CMAKE_C_STANDARD 11)
 set(
     CONIX_SOURCES
     src/conix.c
-    src/common.c
     src/options.c
     src/info.c
     src/handlers.c
