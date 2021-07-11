@@ -1,9 +1,9 @@
 /* Handling of many command line arguments
  * Usage examples:
- * $ ./demo
+ * $ ./demo -p -v
  * $ ./demo -v
- * $ ./demo -p
- * $ ./demo --help
+ * $ ./demo -v -a -h
+ * $ ./demo --help -a
  */
 
 #include <stdio.h>
