@@ -1,3 +1,11 @@
+/* Handling of one command line argument
+ * Usage examples:
+ * $ ./demo
+ * $ ./demo -v
+ * $ ./demo -p
+ * $ ./demo --help
+ */
+
 #include <stdio.h>
 #include <conix.h>
 
