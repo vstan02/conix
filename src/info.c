@@ -57,7 +57,7 @@ extern void info_put(info_t* info, info_item_t value) {
         if (diff < 0) return push(info, _index, value);
 
         free((char*) current.description);
-        info->values[_index].description = str_copy(value.description);
+        info->values[_index].description = strdup(value.description);
         return;
     });
 }
@@ -75,7 +75,7 @@ static void push(info_t* info, size_t index, info_item_t value) {
 
     ++info->length;
     info->values[index] = (info_item_t) {
-        .name = str_copy(value.name),
-        .description = str_copy(value.description)
+        .name = strdup(value.name),
+        .description = strdup(value.description)
     };
 }

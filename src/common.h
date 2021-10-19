@@ -1,4 +1,4 @@
-/* Common - Common types, macros and functions
+/* Common - Common types and macros
  * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
@@ -21,13 +21,14 @@
 #define CONIX_COMMON_H
 
 #include <stddef.h>
+#include <string.h>
 
 #define foreach(index, from, to) \
     for (size_t index = from; index < to; ++index)
 
 #define tokenize(string, delimit, token, body) \
     do { \
-        char* token = strtok(str_copy(string), delimit); \
+        char* token = strtok(strdup(string), delimit); \
         while (token != NULL) { \
             body; \
             token = strtok(NULL, delimit); \
@@ -35,7 +36,5 @@
     } while (0)
 
 typedef void (*handle_t)(void*, void*);
-
-extern char* str_copy(const char* string);
 
 #endif // CONIX_COMMON_H
