@@ -4,12 +4,10 @@ sudo: required
 
 compiler:
   - gcc
-  - clang
 
 before_install:
   - sudo apt-get install -y cmake
   - sudo apt-get install -y gcc
-  - sudo apt-get install -y clang
   - sudo apt-get install libglib2.0-dev
 
 script:
