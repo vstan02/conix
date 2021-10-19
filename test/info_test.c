@@ -32,11 +32,11 @@ static void test_length(void);
 static const char* get_desc(const info_t*, const char*);
 
 extern void add_info_tests(void) {
+    g_test_add_func(TEST_INFO_PATH "/should_have_correct_length", test_length);
     g_test_add_func(TEST_INFO_PATH "/should_contain_items_in_correct_order", test_order_of_items);
     g_test_add_func(TEST_INFO_PATH "/should_copy_the_name_and_description", test_copying_of_items);
     g_test_add_func(TEST_INFO_PATH "/should_not_contain_strange_items", test_containing_of_strange_items);
     g_test_add_func(TEST_INFO_PATH "/should_contain_correct_descriptions", test_descriptions);
-    g_test_add_func(TEST_INFO_PATH "/should_have_correct_length", test_length);
 }
 
 static void test_order_of_items(void) {
