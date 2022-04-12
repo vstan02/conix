@@ -1,5 +1,5 @@
 /* Handlers - A collection of cli handlers
- * Copyright (C) 2021 Stan Vlad <vstan02@protonmail.com>
+ * Copyright (C) 2021-2022 Stan Vlad <vstan02@protonmail.com>
  *
  * This file is part of Conix.
  *
@@ -55,8 +55,28 @@ extern void handlers_put(handlers_t* handlers, handler_t handler) {
     handlers->stores[index] = store;
 }
 
+extern void handlers_put_hashed(handlers_t* handlers, handler_t handler) {
+    handler_store_t* store = (handler_store_t*) malloc(sizeof(handler_store_t));
+    store->data = handler;
+
+    size_t index = handler.id;
+    store->next = handlers->stores[index];
+    handlers->stores[index] = store;
+}
+
 extern handler_t* handlers_get(handlers_t* handlers, const char* id) {
     handler_store_t* store = handlers->stores[hash(id)];
+    while (store != NULL) {
+        if (!strcmp(store->data.id, id)) {
+            return &store->data;
+        }
+        store = store->next;
+    }
+    return NULL;
+}
+
+extern handler_t* handlers_get_hashed(handlers_t* handlers, const char* id) {
+    handler_store_t* store = handlers->stores[id];
     while (store != NULL) {
         if (!strcmp(store->data.id, id)) {
             return &store->data;
