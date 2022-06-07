@@ -3,7 +3,6 @@
 
 [![Version: v0.1.0](https://img.shields.io/badge/version-v1.0.0-blue)](https://vstan02.github.io/conix)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
-[![Build Status](https://api.travis-ci.org/vstan02/conix.svg?branch=master)](https://travis-ci.org/github/vstan02/conix)
 
 ## Contents
 - [Usage](#usage)
