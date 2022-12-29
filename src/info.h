@@ -23,25 +23,25 @@
 #include "common.h"
 
 #define info_foreach(info, item, body) \
-    do { \
-        foreach(_index, 0, (info).length) { \
-            info_item_t item = (info).values[_index]; \
-            body; \
-        } \
-    } while (0)
+	do { \
+		foreach(_index, 0, (info).length) { \
+			info_item_t item = (info).values[_index]; \
+			body; \
+		} \
+	} while (0)
 
 typedef struct info info_t;
 typedef struct info_item info_item_t;
 
 struct info {
-    size_t size;
-    size_t length;
-    info_item_t* values;
+	size_t size;
+	size_t length;
+	info_item_t* values;
 };
 
 struct info_item {
-    const char* name;
-    const char* description;
+	const char* name;
+	const char* description;
 };
 
 extern void info_init(info_t* info);

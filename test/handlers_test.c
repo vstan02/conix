@@ -25,33 +25,33 @@
 static void test_handlers_main(void);
 
 extern void add_handlers_tests(void) {
-    g_test_add_func(TEST_HANDLERS_PATH, test_handlers_main);
+	g_test_add_func(TEST_HANDLERS_PATH, test_handlers_main);
 }
 
 static void test_handlers_main(void) {
-    handlers_t handlers;
-    handler_t items[] = {
-        { "1", "First item", NULL },
-        { "2", "Second item", NULL },
-        { "3", "Third item", NULL }
-    };
+	handlers_t handlers;
+	handler_t items[] = {
+		{ "1", "First item", NULL },
+		{ "2", "Second item", NULL },
+		{ "3", "Third item", NULL }
+	};
 
-    handlers_init(&handlers);
+	handlers_init(&handlers);
 
-    foreach(i, 0, 3) {
-        handlers_put(&handlers, items[i]);
-    }
+	foreach(i, 0, 3) {
+		handlers_put(&handlers, items[i]);
+	}
 
-    handler_t* result = handlers_get(&handlers, "45");
-    g_assert_null(result);
+	handler_t* result = handlers_get(&handlers, "45");
+	g_assert_null(result);
 
-    foreach(i, 0, 3) {
-        result = handlers_get(&handlers, items[i].id);
+	foreach(i, 0, 3) {
+		result = handlers_get(&handlers, items[i].id);
 
-        g_assert_cmpstr(result->id, ==, items[i].id);
-        g_assert_cmpstr(result->payload, ==, items[i].payload);
-        g_assert_null(result->handle);
-    }
+		g_assert_cmpstr(result->id, ==, items[i].id);
+		g_assert_cmpstr(result->payload, ==, items[i].payload);
+		g_assert_null(result->handle);
+	}
 
-    handlers_free(&handlers);
+	handlers_free(&handlers);
 }

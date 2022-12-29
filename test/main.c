@@ -21,9 +21,9 @@
 
 #include "test.h"
 
-int main(int argc, char** argv) {
-    g_test_init(&argc, &argv, NULL);
-    add_info_tests();
-    add_handlers_tests();
-    return g_test_run();
+extern int main(int argc, char** argv) {
+	g_test_init(&argc, &argv, NULL);
+	add_info_tests();
+	add_handlers_tests();
+	return g_test_run();
 }

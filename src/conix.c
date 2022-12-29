@@ -25,58 +25,58 @@
 #define DEFAULT_OPTION "--default"
 
 struct cnx_cli {
-    cnx_ctx_t ctx;
-    options_t options;
+	cnx_ctx_t ctx;
+	options_t options;
 };
 
 static void help(cnx_ctx_t*, cnx_cli_t*);
 static void version(cnx_ctx_t*, void*);
 
 extern cnx_cli_t* cnx_cli_init(cnx_app_t app) {
-    cnx_cli_t* cli = (cnx_cli_t*) malloc(sizeof(cnx_cli_t));
-    cli->ctx = (cnx_ctx_t) { app, 0, NULL };
-    options_init(&cli->options, &cli->ctx);
+	cnx_cli_t* cli = (cnx_cli_t*) malloc(sizeof(cnx_cli_t));
+	cli->ctx = (cnx_ctx_t) { app, 0, NULL };
+	options_init(&cli->options, &cli->ctx);
 
-    cnx_cli_add(cli, 3, (cnx_option_t[]) {
-        { "-h, --help", "Display this information", (cnx_handle_t)help, cli },
-        { "-v, --version", "Display version information", (cnx_handle_t)version, NULL },
-        { "*", NULL, (cnx_handle_t)help, cli }
-    });
+	cnx_cli_add(cli, 3, (cnx_option_t[]) {
+		{ "-h, --help", "Display this information", (cnx_handle_t)help, cli },
+		{ "-v, --version", "Display version information", (cnx_handle_t)version, NULL },
+		{ "*", NULL, (cnx_handle_t)help, cli }
+	});
 
-    return cli;
+	return cli;
 }
 
 extern void cnx_cli_free(cnx_cli_t* cli) {
-    if (cli != NULL) {
-        options_free(&cli->options);
-        free(cli);
-    }
+	if (cli != NULL) {
+		options_free(&cli->options);
+		free(cli);
+	}
 }
 
 extern void cnx_cli_run(cnx_cli_t* cli, size_t argc, const char* argv[]) {
-    if (argc > 1) {
-        cli->ctx.argc = argc - 1;
-        cli->ctx.argv = argv + 1;
-    }
-    options_run(&cli->options, argc > 1 ? argv[1] : DEFAULT_OPTION);
+	if (argc > 1) {
+		cli->ctx.argc = argc - 1;
+		cli->ctx.argv = argv + 1;
+	}
+	options_run(&cli->options, argc > 1 ? argv[1] : DEFAULT_OPTION);
 }
 
 extern void cnx_cli_add(cnx_cli_t* cli, size_t count, cnx_option_t options[]) {
-    foreach(i, 0, count) {
-        options_add(&cli->options, (option_t) {
-            .name = options[i].name,
-            .description = options[i].description,
-            .payload = options[i].payload,
-            .handle = (handle_t)options[i].handle
-        });
-    }
+	foreach(i, 0, count) {
+		options_add(&cli->options, (option_t) {
+			.name = options[i].name,
+			.description = options[i].description,
+			.payload = options[i].payload,
+			.handle = (handle_t)options[i].handle
+		});
+	}
 }
 
 static void help(cnx_ctx_t* ctx, cnx_cli_t* cli) {
-    printf("Usage: %s [options]\n\n", ctx->app.name);
-    options_print(&cli->options);
+	printf("Usage: %s [options]\n\n", ctx->app.name);
+	options_print(&cli->options);
 }
 
 static void version(cnx_ctx_t* ctx, void* payload) {
-    printf("%s v%s\n", ctx->app.name, ctx->app.version);
+	printf("%s v%s\n", ctx->app.name, ctx->app.version);
 }
