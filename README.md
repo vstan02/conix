@@ -1,7 +1,7 @@
 # Conix
 > A library for easy handling of command line options
 
-[![Version: v0.1.0](https://img.shields.io/badge/version-v1.0.0-blue)](https://vstan02.github.io/conix)
+[![Version: v1.0.0](https://img.shields.io/badge/version-v1.0.0-blue)](https://vstan02.github.io/conix)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 ## Contents
@@ -53,7 +53,6 @@ After project building you can run this example as you can see [here](#running-d
 ### Dependencies
 - C compiler (gcc, clang, etc...)
 - cmake (>= 3.16)
-- glib (v2.0) (for testing)
 
 These packages can usually be installed through your distributions package manager.
 
@@ -77,11 +76,6 @@ make
 ### Running demo
 ```
 ./demo
-```
-
-### Running tests
-```
-./test
 ```
 
 ### Installing
