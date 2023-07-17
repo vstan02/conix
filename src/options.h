@@ -27,17 +27,17 @@ typedef struct option option_t;
 typedef struct options options_t;
 
 struct options {
-	void* payload;
-	info_t info;
-	handlers_t handlers;
-	size_t max_size;
+  void* payload;
+  info_t info;
+  handlers_t handlers;
+  size_t max_size;
 };
 
 struct option {
-	const char* name;
-	const char* description;
-	handle_t handle;
-	void* payload;
+  const char* name;
+  const char* description;
+  handle_t handle;
+  void* payload;
 };
 
 extern void options_init(options_t* options, void* payload);

@@ -45,25 +45,25 @@ extern int main(int argc, const char** argv) {
 	return 0;
 }
 
-static void index_option(cnx_ctx_t* ctx, void* payload) {
+static void index_option(cnx_ctx_t* ctx, __attribute_maybe_unused__ void* payload) {
 	printf("Welcome to %s!\n", ctx->app.name);
 }
 
-static void about_option(cnx_ctx_t* ctx, void* payload) {
+static void about_option(cnx_ctx_t* ctx, __attribute_maybe_unused__ void* payload) {
 	printf("%s is a simple app created with conix!\n", ctx->app.name);
 }
 
-static void version_option(cnx_ctx_t* ctx, void* payload) {
+static void version_option(cnx_ctx_t* ctx, __attribute_maybe_unused__ void* payload) {
 	printf("%s -> %s\n", ctx->app.name, ctx->app.version);
 }
 
-static void print_args_option(cnx_ctx_t* ctx, void* payload) {
+static void print_args_option(cnx_ctx_t* ctx, __attribute_maybe_unused__ void* payload) {
 	printf("Total arguments: %zu\n", ctx->argc - 1);
 	for (size_t i = 1; i < ctx->argc; ++i) {
 		printf("%zu -> %s\n", i, ctx->argv[i]);
 	}
 }
 
-static void not_found_option(cnx_ctx_t* ctx, void* payload) {
+static void not_found_option(cnx_ctx_t* ctx, __attribute_maybe_unused__ void* payload) {
 	printf("%s: Invalid option!\n", ctx->app.name);
 }

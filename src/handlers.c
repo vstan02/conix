@@ -23,51 +23,51 @@
 #include "handlers.h"
 
 struct handler_store {
-	handler_t data;
-	handler_store_t* next;
+  handler_t data;
+  handler_store_t* next;
 };
 
 static size_t hash(const char*);
 
 extern void handlers_init(handlers_t* handlers) {
-	foreach(i, 0, HANDLER_STORES) {
-		handlers->stores[i] = NULL;
-	}
+  foreach(i, 0, HANDLER_STORES) {
+    handlers->stores[i] = NULL;
+  }
 }
 
 extern void handlers_free(handlers_t* handlers) {
-	foreach(i, 0, HANDLER_STORES) {
-		handler_store_t* store = handlers->stores[i];
-		while (store != NULL) {
-			handler_store_t* current = store;
-			store = store->next;
-			free(current);
-		}
-	}
+  foreach(i, 0, HANDLER_STORES) {
+    handler_store_t* store = handlers->stores[i];
+    while (store != NULL) {
+      handler_store_t* current = store;
+      store = store->next;
+      free(current);
+    }
+  }
 }
 
 extern void handlers_put(handlers_t* handlers, handler_t handler) {
-	handler_store_t* store = (handler_store_t*) malloc(sizeof(handler_store_t));
-	store->data = handler;
+  handler_store_t* store = (handler_store_t*) malloc(sizeof(handler_store_t));
+  store->data = handler;
 
-	size_t index = hash(handler.id);
-	store->next = handlers->stores[index];
-	handlers->stores[index] = store;
+  size_t index = hash(handler.id);
+  store->next = handlers->stores[index];
+  handlers->stores[index] = store;
 }
 
 extern handler_t* handlers_get(handlers_t* handlers, const char* id) {
-	handler_store_t* store = handlers->stores[hash(id)];
-	while (store != NULL) {
-		if (!strcmp(store->data.id, id)) {
-			return &store->data;
-		}
-		store = store->next;
-	}
-	return NULL;
+  handler_store_t* store = handlers->stores[hash(id)];
+  while (store != NULL) {
+    if (!strcmp(store->data.id, id)) {
+      return &store->data;
+    }
+    store = store->next;
+  }
+  return NULL;
 }
 
 static size_t hash(const char* string) {
-	size_t result = 0;
-	while (*string) result += *(string++);
-	return result % HANDLER_STORES;
+  size_t result = 0;
+  while (*string) result += *(string++);
+  return result % HANDLER_STORES;
 }

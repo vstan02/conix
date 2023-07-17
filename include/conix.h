@@ -29,21 +29,21 @@ typedef struct cnx_option cnx_option_t;
 typedef void(*cnx_handle_t)(cnx_ctx_t*, void*);
 
 struct cnx_app {
-	const char* name;
-	const char* version;
+  const char* name;
+  const char* version;
 };
 
 struct cnx_ctx {
-	cnx_app_t app;
-	size_t argc;
-	const char** argv;
+  cnx_app_t app;
+  size_t argc;
+  const char** argv;
 };
 
 struct cnx_option {
-	const char* name;
-	const char* description;
-	cnx_handle_t handle;
-	void* payload;
+  const char* name;
+  const char* description;
+  cnx_handle_t handle;
+  void* payload;
 };
 
 /**

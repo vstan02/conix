@@ -29,13 +29,13 @@ typedef struct handlers handlers_t;
 typedef struct handler_store handler_store_t;
 
 struct handler {
-	const char* id;
-	void* payload;
-	handle_t handle;
+  const char* id;
+  void* payload;
+  handle_t handle;
 };
 
 struct handlers {
-	handler_store_t* stores[HANDLER_STORES];
+  handler_store_t* stores[HANDLER_STORES];
 };
 
 extern void handlers_init(handlers_t* handlers);

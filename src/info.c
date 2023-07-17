@@ -25,57 +25,61 @@
 #define BASE_SIZE 4
 
 #define last_name(info) \
-	info->values[info->length - 1].name
+  info->values[info->length - 1].name
 
 #define reallocate(type, array, size) \
-	(type*) realloc(array, size * sizeof(type))
+  (type*) realloc(array, size * sizeof(type))
 
 static void push(info_t*, size_t, info_item_t);
 
 extern void info_init(info_t* info) {
-	info->length = info->size = 0;
-	info->values = NULL;
+  info->length = info->size = 0;
+  info->values = NULL;
 }
 
 extern void info_free(info_t* info) {
-	if (info->values == NULL) return;
-	info_foreach(*info, item, {
-		free((char*) item.name);
-		free((char*) item.description);
-	});
-	free(info->values);
+  if (info->values == NULL) return;
+  info_foreach(*info, item, {
+    free((char*) item.name);
+    free((char*) item.description);
+  });
+  free(info->values);
 }
 
 extern void info_put(info_t* info, info_item_t value) {
-	if (info->values == NULL || strcmp(value.name, last_name(info)) > 0) {
-		return push(info, info->length, value);
-	}
+  if (info->values == NULL || strcmp(value.name, last_name(info)) > 0) {
+    push(info, info->length, value);
+    return;
+  }
 
-	info_foreach(*info, current, {
-		int diff = strcmp(value.name, current.name);
-		if (diff > 0) continue;
-		if (diff < 0) return push(info, _index, value);
+  info_foreach(*info, current, {
+    int diff = strcmp(value.name, current.name);
+    if (diff > 0) continue;
+    if (diff < 0) {
+      push(info, _index, value);
+      return;
+    }
 
-		free((char*) current.description);
-		info->values[_index].description = strdup(value.description);
-		return;
-	});
+    free((char*) current.description);
+    info->values[_index].description = strdup(value.description);
+    return;
+  });
 }
 
 static void push(info_t* info, size_t index, info_item_t value) {
-	if (info->length == info->size) {
-		info->size = info->size ? info->size * 2 : BASE_SIZE;
-		info->values = reallocate(info_item_t, info->values, info->size);
-		if (info->values == NULL) exit(EXIT_FAILURE);
-	}
+  if (info->length == info->size) {
+    info->size = info->size ? info->size * 2 : BASE_SIZE;
+    info->values = reallocate(info_item_t, info->values, info->size);
+    if (info->values == NULL) exit(EXIT_FAILURE);
+  }
 
-	for (size_t i = info->length; i > index; --i) {
-		info->values[i] = info->values[i - 1];
-	}
+  for (size_t i = info->length; i > index; --i) {
+    info->values[i] = info->values[i - 1];
+  }
 
-	++info->length;
-	info->values[index] = (info_item_t) {
-		.name = strdup(value.name),
-		.description = strdup(value.description)
-	};
+  ++info->length;
+  info->values[index] = (info_item_t) {
+    .name = strdup(value.name),
+    .description = strdup(value.description)
+  };
 }
