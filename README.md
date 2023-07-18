@@ -47,6 +47,7 @@ cnx_cli_free(cli);
 ```
 
 After project building you can run this example as you can see [here](#running-demo).
+Also, you can see [xcalc](https://vstan02.github.io/xcalc) - an real example of using Conix.
 
 ## Building and Installation
 
